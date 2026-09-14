@@ -2,8 +2,8 @@
   "model_name": "AROME-PE France (Probabilités)",
   "provider": "Météo-France",
   "resolution": "Ensemble calibré 1,3 km (0 à 100 %)",
-  "run_time": "2026-09-13T21:00:00Z",
-  "generated_at": "2026-09-14T01:52:16.855182+00:00",
+  "run_time": "2026-09-14T00:00:00Z",
+  "generated_at": "2026-09-14T04:57:57.019690+00:00",
   "layers": {
     "prob_pluie_24h_10": {
       "label": "Probabilité Pluie 24h ≥ 10 mm (J+0 & J+1)",
