@@ -4,7 +4,7 @@
   "model_name": "AROME HD (1,3 km)",
   "provider": "Meteo-France",
   "resolution": "1,3 km (0.01°)",
-  "generated_at": "2026-09-15T21:00:56.899183+00:00",
+  "generated_at": "2026-09-15T22:56:08.911661+00:00",
   "run_time": "2026-09-15T15:00:00Z",
   "bounds": {
     "south": 39.5,
