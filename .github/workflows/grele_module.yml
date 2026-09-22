@@ -1,0 +1,90 @@
+﻿# =============================================================================
+# Module Grêle & Convectif (AROME 0,025°) — automatisation dédiée
+# =============================================================================
+# SÉPARÉE de l'automatisation AROME habituelle (1,3 km, cartes de base).
+# Produit UNIQUEMENT les couches du module convectif :
+#   - 6 couches : ipo, ipg, ipt, instabilite, orages_simules, rafales_convectives
+#   - synthèses 24h J0 / J+1 ({couche}_24h_{j0|j1}.webp)
+#   - fichiers communaux MCV2 (output/arome/maps/communes/{dep}.bin.gz)
+#
+# PAS de cron : le déclenchement est assuré par le programme externe
+# (workflow_dispatch via l'API GitHub), après chaque run AROME
+# (00z, 03z, 06z, 09z, 12z, 15z, 18z, 21z).
+# =============================================================================
+
+name: Module Grele & Convectif (AROME 0,025°)
+
+on:
+  workflow_dispatch:
+    inputs:
+      max_hours:
+        description: 'Échéance max (0-51, défaut 51)'
+        required: false
+        default: '51'
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: "grele-module"
+  cancel-in-progress: false
+
+jobs:
+  grele-maps:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    env:
+      AROME_OUT_DIR: ${{ github.workspace }}/output
+
+    steps:
+      - name: Récupération du dépôt
+        uses: actions/checkout@v4
+
+      - name: Configuration de Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Dépendances système + Python
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --fix-missing libeccodes0 libeccodes-tools
+          python -m pip install --upgrade pip
+          pip install numpy pillow requests eccodes scipy
+
+      - name: Pipeline Module Grêle (couches convectives 0,025°)
+        run: |
+          python -u pipeline/arome_open_data_remote.py \
+            --convective-only \
+            --max-hours "${{ inputs.max_hours || '51' }}"
+
+      - name: Commit et push des cartes du module Grêle
+        run: |
+          git config --global user.name "Meteo Automations Bot"
+          git config --global user.email "bot@meteo-climat.pro"
+          # Seules les sorties du module (répertoires disjoints des cartes de base)
+          git add output/arome/maps/ipo \
+                  output/arome/maps/ipg \
+                  output/arome/maps/ipt \
+                  output/arome/maps/instabilite \
+                  output/arome/maps/orages_simules \
+                  output/arome/maps/rafales_convectives \
+                  output/arome/maps/communes \
+                  'output/arome/maps/*_24h_*.webp'
+          if git diff --staged --quiet; then
+            echo "Aucune nouvelle carte du module à pousser."
+          else
+            git commit -m "Module Grêle : couches convectives AROME 0,025° [$(date -u +'%Y-%m-%d %H:%MZ')]"
+            git push origin main
+          fi
+
+      - name: Déclencher le déploiement GitHub Pages
+        # NB : un push fait par GITHUB_TOKEN ne déclenche PAS les workflows
+        # `on: push` (limitation GitHub) → on lance explicitement le déploiement.
+        run: |
+          gh workflow run deploy-pages.yml --repo mto-user84925/arome-weather-map --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
+

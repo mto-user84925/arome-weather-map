@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vigilance météo 48h (HARMONIE/AROME) — Météo-Climat Pro</title>
+<meta name="description" content="Carte de vigilance météo 48h non officielle : 11 aléas (vent, pluie, orages, grêle, chaleur, froid, neige, verglas, brouillard, littoral, feu) par département, J/J+1.">
+<link rel="stylesheet" href="vigilance-assets/harmonie-risques.css?v=20260905-v9">
+<link rel="stylesheet" href="vigilance-assets/vigilance-theme.css?v=20260905-v9">
+<style>
+  :root { color-scheme: dark; }
+  body { margin:0; background:#0b1220; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
+  .vw-shell { max-width:1180px; margin:0 auto; padding:16px 14px 40px; }
+  .vw-top { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:14px; }
+  .vw-brand { font-weight:800; color:#e2e8f0; font-size:15px; margin-right:auto; }
+  .vw-brand small { display:block; font-weight:600; color:#7dd3fc; font-size:11px; text-transform:uppercase; letter-spacing:.05em; }
+  .vw-top a.vw-btn { text-decoration:none; color:#cbd5e1; background:#1e293b; border:1px solid #334155; padding:6px 12px; border-radius:8px; font-size:12.5px; font-weight:700; }
+  .vw-top a.vw-btn:hover { border-color:#64748b; }
+  .vw-top a.vw-btn.here { color:#111; background:#4ade80; border-color:#4ade80; }
+  .vw-note { background:#fef9c3; color:#3f3a00; border-radius:8px; padding:8px 12px; font-size:12px; margin:0 0 14px; }
+  .vw-note code { background:#f5eec2; padding:1px 5px; border-radius:4px; }
+</style>
+</head>
+<body>
+<div class="vw-shell">
+  <div class="vw-top">
+    <div class="vw-brand">Météo-Climat Pro<small>Vigilance 48h · HARMONIE / AROME</small></div>
+    <a class="vw-btn" href="index.html">🗺️ Carte AROME HD</a>
+    <a class="vw-btn" href="previsions.html">🏘️ Commune</a>
+    <a class="vw-btn" href="alerte-grele.html">🌩️ Grêle</a>
+    <a class="vw-btn here" href="vigilance.html">🛡️ Vigilance</a>
+  </div>
+  <p class="vw-note">
+    Vigilance <b>non officielle</b> dérivée des modèles HARMONIE-AROME — mêmes seuils que le site d'origine (11 aléas, 96 départements, J/J+1).
+    Cartes téléchargeables : bouton <b>📷 Capture PNG</b> sur la carte.
+  </p>
+  <section
+        class="hrw-card"
+        data-hrw-app
+        data-base-url="https://raw.githubusercontent.com/monsieurmeteo/risques/data"
+        data-geojson-url="vigilance-assets/departements-france.geojson"
+        data-littoral-url="vigilance-assets/littoral-coastline.geojson"
+        data-default-department=""
+        data-default-hazard="orages"
+        data-timezone="Europe/Paris"
+    >
+        <header class="hrw-header">
+            <div class="hrw-header-row">
+                <div>
+                    <p class="hrw-kicker">VIGILANCE NON OFFICIELLE • MODÈLE HARMONIE / AROME</p>
+                    <h2>Vigilance météo (bêta)</h2>
+                    <p class="hrw-meta" data-hrw-run>Chargement du dernier run…</p>
+                    <button type="button" class="hrw-locate-button" data-hrw-locate>📍 Me géolocaliser</button>
+                </div>
+                <div class="hrw-national-summary" data-hrw-national-summary hidden>
+                    <p class="hrw-national-summary-title" data-hrw-national-summary-title>France — J0</p>
+                    <dl>
+                        <div><dt>Maxi</dt><dd data-hrw-summary-max></dd></div>
+                        <div><dt>Mini</dt><dd data-hrw-summary-min></dd></div>
+                        <div><dt>Rafales maxi</dt><dd data-hrw-summary-gust></dd></div>
+                        <div><dt>Pluie maxi</dt><dd data-hrw-summary-precip></dd></div>
+                    </dl>
+                </div>
+            </div>
+        </header>
+
+        <div class="hrw-toolbar">
+            <div class="hrw-hazard-tabs" role="tablist" aria-label="Aléa" data-hrw-hazard-tabs></div>
+            <div class="hrw-day-tabs" role="tablist" aria-label="Échéance" data-hrw-day-tabs></div>
+        </div>
+
+        <div class="hrw-body">
+            <div class="hrw-map-wrap">
+                <div class="hrw-map-row">
+                    <div class="hrw-map-primary">
+                        <svg class="hrw-map" data-hrw-map viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Carte des départements de France"></svg>
+                        <div class="hrw-map-loading" data-hrw-map-loading>Chargement de la carte…</div>
+                    </div>
+                    <div class="hrw-map-inset-column">
+                        <div class="hrw-map-inset-wrap">
+                            <svg class="hrw-inset-map" data-hrw-inset-map viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Carte détaillée de l’Île-de-France"></svg>
+                            <span class="hrw-inset-label">Île-de-France</span>
+                        </div>
+                        <div class="hrw-map-tools">
+                            <button type="button" data-hrw-capture title="Capturer l’image affichée">📷 Capture PNG</button>
+                            <button type="button" data-hrw-copy title="Copier la vue dans le presse-papiers">📋 Copier la vue</button>
+                        </div>
+                        <p class="hrw-legend-title" data-hrw-legend-title></p>
+                    </div>
+                </div>
+                <div class="hrw-legend" data-hrw-legend></div>
+            </div>
+
+            <div class="hrw-detail" data-hrw-detail>
+                <p class="hrw-detail-placeholder" data-hrw-detail-placeholder>Cliquez sur un département ou recherchez une commune.</p>
+                <div class="hrw-detail-content" data-hrw-detail-content hidden>
+                    <h3 data-hrw-detail-title></h3>
+                    <div class="hrw-detail-grid" data-hrw-detail-grid></div>
+                    <div class="hrw-frise" data-hrw-frise>
+                        <h4>Frise horaire — <span data-hrw-frise-hazard></span></h4>
+                        <div class="hrw-frise-track" data-hrw-frise-track></div>
+                        <div class="hrw-frise-labels" data-hrw-frise-labels></div>
+                    </div>
+                    <div class="hrw-advice" data-hrw-advice>
+                        <h4>Détails des phénomènes</h4>
+                        <p class="hrw-advice-subtitle">Bonnes pratiques</p>
+                        <p class="hrw-advice-text" data-hrw-advice-text></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="hrw-footer">
+            <span data-hrw-generated>Mise à jour en cours de lecture…</span>
+            <span>
+                Données dérivées de
+                <a href="https://dataplatform.knmi.nl/dataset/harmonie-arome-cy43-p3-1-0" target="_blank" rel="noopener noreferrer">HARMONIE-AROME Cy43 (KNMI)</a>
+                • Contours départementaux : IGN / data.gouv.fr (licence ouverte)
+            </span>
+            <span class="hrw-plugin-version">Plugin Vigilance HARMONIE v2.16.0 (2026-09-03)</span>
+        </footer>
+
+        <noscript>
+            <p class="hrw-message hrw-error">JavaScript doit être activé pour afficher la carte de vigilance.</p>
+        </noscript>
+    </section>
+  <footer style="margin-top:18px; color:#64748b; font-size:11.5px; text-align:center;">
+    Reproduction technique d'alertes-meteo.com — données HARMONIE-AROME Cy43 (KNMI, CC BY 4.0) · widget GPL-2.0 · ne remplace pas la vigilance Météo-France.
+  </footer>
+</div>
+<script src="vigilance-assets/harmonie-risques.js?v=20260905-v9"></script>
+<script src="vigilance-assets/vigilance-export.js?v=20260905-v9"></script>
+<div id="vig-test-badge" style="position:fixed;top:10px;right:10px;z-index:99999;background:#e0342c;color:#fff;font:900 15px/1.2 Arial,sans-serif;padding:7px 12px;border-radius:9px;box-shadow:0 3px 10px rgba(0,0,0,.5);letter-spacing:.5px;">TEST v9 — 05/09/2026</div>
+</body>
+</html>

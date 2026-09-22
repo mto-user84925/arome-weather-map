@@ -1,0 +1,203 @@
+﻿/* ============================================================================
+   Thème « Météo-Climat Pro » pour la carte de Vigilance 48h (11 aléas).
+   Design propre et distinct du site d'origine ; FONCTIONNALITÉS IDENTIQUES
+   (la logique et le DOM du widget ne sont pas modifiés — seule la couche
+   visuelle est re-skinée via les variables custom + quelques surcharges).
+   Palette alignée sur monsieurmeteo.github.io/arome-weather-map :
+   fond #070b14 / surfaces bleu nuit / accent #00d2ff / bordures blanches 12 %.
+   ========================================================================== */
+
+.hrw-card {
+    --hrw-bg: #0b1322;
+    --hrw-panel: #0e1a2e;
+    --hrw-panel-alt: #13213a;
+    --hrw-border: rgba(255, 255, 255, 0.13);
+    --hrw-text: #e8eef6;
+    --hrw-muted: #93a5bf;
+    --hrw-accent: #00d2ff;
+
+    background: linear-gradient(180deg, rgba(14, 26, 46, 0.92), rgba(7, 12, 22, 0.96));
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    color: var(--hrw-text);
+}
+
+/* --- En-tête ------------------------------------------------------------- */
+.hrw-header {
+    background: linear-gradient(135deg, rgba(0, 210, 255, 0.10), rgba(20, 30, 60, 0.10));
+    border-bottom: 1px solid var(--hrw-border);
+}
+
+.hrw-kicker {
+    color: #7dd3fc;
+    letter-spacing: 0.14em;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.hrw-header h2 {
+    color: #ffffff;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.hrw-meta { color: var(--hrw-muted); }
+
+.hrw-locate-button {
+    background: linear-gradient(135deg, rgba(0, 210, 255, 0.18), rgba(2, 132, 199, 0.18));
+    border: 1px solid rgba(0, 210, 255, 0.45);
+    color: #dff7ff;
+    border-radius: 10px;
+    font-weight: 800;
+}
+.hrw-locate-button:hover {
+    background: linear-gradient(135deg, rgba(0, 210, 255, 0.34), rgba(2, 132, 199, 0.34));
+    box-shadow: 0 0 14px rgba(0, 210, 255, 0.35);
+    color: #ffffff;
+}
+
+/* Résumé national */
+.hrw-national-summary {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--hrw-border);
+    border-radius: 12px;
+}
+.hrw-national-summary-title { color: #9fdcff; font-weight: 800; }
+.hrw-national-summary dt { color: var(--hrw-muted); }
+.hrw-national-summary dd { color: #ffffff; font-weight: 800; }
+.hrw-summary-extreme { color: #ff6b6b !important; }
+
+/* --- Recherche ----------------------------------------------------------- */
+.hrw-city-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--hrw-border);
+    color: var(--hrw-text);
+    border-radius: 10px;
+}
+.hrw-city-input:focus {
+    border-color: var(--hrw-accent);
+    box-shadow: 0 0 0 3px rgba(0, 210, 255, 0.18);
+    outline: none;
+}
+.hrw-search-results { background: var(--hrw-panel); border: 1px solid var(--hrw-border); border-radius: 10px; }
+.hrw-search-result { color: var(--hrw-text); }
+.hrw-search-result:hover, .hrw-search-result.is-active { background: rgba(0, 210, 255, 0.14); }
+
+/* --- Onglets aléa / jour ------------------------------------------------- */
+.hrw-tab {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--hrw-border);
+    color: var(--hrw-muted);
+    font-weight: 700;
+}
+.hrw-tab:hover { color: #ffffff; border-color: rgba(0, 210, 255, 0.7); }
+.hrw-hazard-tabs .hrw-tab.is-active {
+    background: linear-gradient(135deg, rgba(0, 210, 255, 0.35), rgba(2, 132, 199, 0.30));
+    border-color: #00d2ff;
+    color: #ffffff;
+    box-shadow: 0 0 12px rgba(0, 210, 255, 0.35);
+}
+.hrw-day-tabs .hrw-tab.is-active {
+    background: #e0342c;
+    border-color: #ff5f57;
+    color: #fff;
+}
+
+/* --- Carte --------------------------------------------------------------- */
+.hrw-map-primary {
+    background: rgba(3, 8, 16, 0.55);
+    border: 1px solid var(--hrw-border);
+    border-radius: 14px;
+}
+.hrw-map path {
+    stroke: rgba(10, 20, 36, 0.9);
+    stroke-width: 0.6;
+}
+.hrw-map path.is-hover,
+.hrw-map path:hover {
+    filter: brightness(1.2) drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
+}
+.hrw-map-loading { color: var(--hrw-muted); }
+
+/* Encart Île-de-France + outils */
+.hrw-map-inset-wrap { background: rgba(3, 8, 16, 0.6); border: 1px solid var(--hrw-border); border-radius: 10px; }
+.hrw-inset-label { color: var(--hrw-muted); font-weight: 700; }
+.hrw-map-tools button {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--hrw-border);
+    border-radius: 9px;
+    color: #cfe9f7;
+    font-weight: 700;
+}
+.hrw-map-tools button:hover { border-color: #00d2ff; color: #ffffff; }
+
+/* --- Légende ------------------------------------------------------------- */
+.hrw-legend-title {
+    background: var(--hrw-panel);
+    border: 1px solid var(--hrw-border);
+    color: #ffffff;
+    border-radius: 10px;
+}
+.hrw-legend { color: var(--hrw-muted); }
+
+/* --- Détail département -------------------------------------------------- */
+.hrw-detail {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--hrw-border);
+    border-radius: 14px;
+}
+.hrw-detail-placeholder { color: var(--hrw-muted); }
+.hrw-detail-content h3 { color: #ffffff; }
+.hrw-frise h4, .hrw-advice h4 { color: #9fdcff; }
+.hrw-advice-subtitle { color: var(--hrw-muted); }
+
+/* --- Pied ---------------------------------------------------------------- */
+.hrw-footer { border-top: 1px solid var(--hrw-border); color: var(--hrw-muted); }
+.hrw-footer a { color: #7dd3fc; }
+
+/* --- Divers -------------------------------------------------------------- */
+.hrw-message.hrw-error {
+    background: rgba(239, 68, 68, 0.16);
+    border: 1px solid rgba(239, 68, 68, 0.5);
+    color: #fecaca;
+    border-radius: 10px;
+}
+.hrw-plugin-version { color: #5f7391; }
+
+
+/* ============================================================================
+   Corrections ergonomiques (retour utilisateur) :
+   carte moins haute, chrome compact, tout reste visible sans grand scroll.
+   ========================================================================== */
+.hrw-card { max-width: 1280px; }
+
+/* La carte garde son ratio carré mais sa taille est plafonnée à ~78 % de la
+   hauteur d'écran (et jamais plus large que son conteneur) : plus besoin de
+   descendre pour voir/interagir avec la France entière. */
+.hrw-card .hrw-map {
+    width: min(100%, 64vh) !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    display: block;
+    margin-inline: auto;
+}
+
+/* Chrome compact : header, onglets, carte, détail */
+.hrw-card .hrw-header { padding: 12px 18px 6px; }
+.hrw-card .hrw-header h2 { font-size: 1.2rem; margin-bottom: 2px; }
+.hrw-card .hrw-kicker { font-size: 0.66rem; margin-bottom: 2px; }
+.hrw-card .hrw-locate-button { margin-top: 8px; padding: 7px 14px; font-size: .85rem; }
+.hrw-card .hrw-meta { font-size: .8rem; }
+.hrw-card .hrw-toolbar { padding: 10px 18px; }
+.hrw-card .hrw-tab { padding: 6px 11px; font-size: .76rem; }
+.hrw-card .hrw-map-wrap { padding: 10px 14px; }
+.hrw-card .hrw-legend { margin-top: 8px; gap: 7px; }
+.hrw-card .hrw-legend-title { padding: 6px 10px; font-size: .88rem; }
+.hrw-card .hrw-detail { min-height: 220px; padding: 10px; }
+.hrw-card .hrw-footer { padding: 9px 18px; font-size: .7rem; }
+
+/* Deux colonnes (carte + détail) dès 980 px pour réduire la hauteur totale. */
+@media (min-width: 980px) {
+    .hrw-card .hrw-body { grid-template-columns: minmax(0, 2.2fr) minmax(300px, 1fr) !important; }
+}

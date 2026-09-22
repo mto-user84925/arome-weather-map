@@ -1,0 +1,96 @@
+name: "Archivage Automatique des Cartes (Runs 00Z & 12Z — France + Hauts-de-France)"
+
+on:
+  # 1. Déclenchement automatique dès que le pipeline météo a terminé avec succès
+  workflow_run:
+    workflows:
+      - "Mise a Jour Automatique Multi-Modeles Meteo (24/7)"
+    types:
+      - completed
+
+  # 2. Cron de secours : 00Z (05h00 UTC) et 12Z (17h00 UTC)
+  schedule:
+    - cron: '0 5 * * *'
+    - cron: '0 17 * * *'
+
+  # 3. Déclenchement manuel pour tests
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  archive-maps:
+    # Pour workflow_run : n'archiver que si le pipeline a réussi
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Recuperation du depot
+        uses: actions/checkout@v4
+
+      - name: Configuration de Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Installation Pillow
+        run: pip install pillow
+
+      - name: Verification du run courant (00Z ou 12Z uniquement)
+        id: check_run
+        run: |
+          RUN_HOUR=$(python3 -c "
+import json, sys
+try:
+    with open('output/arome/maps/index.json') as f:
+        d = json.load(f)
+    rt = d.get('run_time', '')
+    hour = int(rt[11:13]) if len(rt) >= 13 else -1
+    print(hour)
+except:
+    print(-1)
+")
+          echo "Run hour: $RUN_HOUR"
+          if [ "$RUN_HOUR" = "0" ] || [ "$RUN_HOUR" = "12" ]; then
+            echo "IS_MAJOR_RUN=true" >> $GITHUB_ENV
+          else
+            echo "IS_MAJOR_RUN=false" >> $GITHUB_ENV
+          fi
+
+      - name: Generation de l'archive Photos d'antenne (France + Hauts-de-France)
+        if: env.IS_MAJOR_RUN == 'true'
+        id: package
+        run: |
+          MONTH_TAG="archives-$(date -u +'%Y-%m')"
+          echo "MONTH_TAG=${MONTH_TAG}" >> $GITHUB_ENV
+          python pipeline/package_archive.py
+
+      - name: Publication dans GitHub Releases
+        if: env.IS_MAJOR_RUN == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # 1. Creer la release mensuelle si elle n'existe pas
+          if ! gh release view "${MONTH_TAG}" --repo "${{ github.repository }}" > /dev/null 2>&1; then
+            echo "Creation de la release mensuelle ${MONTH_TAG}..."
+            gh release create "${MONTH_TAG}" \
+              --repo "${{ github.repository }}" \
+              --title "Archives Cartes AROME — $(date -u +'%B %Y')" \
+              --notes "Archives officielles des runs 00Z et 12Z (France Entière + Hauts-de-France)."
+          fi
+
+          # 2. Uploader le zip genere
+          for z in arome_*.zip; do
+            if [ -f "$z" ]; then
+              echo "Upload de $z dans ${MONTH_TAG}..."
+              gh release upload "${MONTH_TAG}" "$z" --repo "${{ github.repository }}" --clobber
+              echo "Archive $z publiee avec succes !"
+            fi
+          done
+
+      - name: Info si run non-majeur ignore
+        if: env.IS_MAJOR_RUN != 'true'
+        run: |
+          echo "Run actuel non-00Z/12Z — archivage ignore pour ce cycle."

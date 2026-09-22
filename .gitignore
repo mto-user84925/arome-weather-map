@@ -1,0 +1,24 @@
+node_modules/
+__pycache__/
+*.pyc
+.DS_Store
+*.tmp
+.system_generated/
+_mc/
+
+# ── Fichiers inutiles au site et au dépôt ─────────────────────────────
+.chrome_*/
+dist/
+public/
+.vercel/
+exports_csv/
+data/
+
+# ── Recherche & fichiers de référence (jamais déployés) ──
+_research/
+.audit_tmp/
+*.grib2.idx
+*.grib2
+
+# ── Sorties AROME générées automatiquement par le cron (ne pas committer) ──
+output/

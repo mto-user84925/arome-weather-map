@@ -1,0 +1,17 @@
+{
+  "name": "europe-1-v2",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static site ready'"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.48.1",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.4.7",
+    "h5wasm": "^0.10.3",
+    "pg": "^8.13.1",
+    "pngjs": "^7.0.0",
+    "resend": "^4.1.2",
+    "xlsx": "^0.18.5"
+  }
+}

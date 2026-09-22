@@ -1,0 +1,38 @@
+{
+  "chaunyHourly": [
+    {
+      "lat": 49.633833,
+      "lon": 3.197833,
+      "geo_id_insee": "02173002",
+      "reference_time": "2026-03-02T18:10:09Z",
+      "insert_time": "2026-03-02T18:05:03Z",
+      "validity_time": "2026-03-02T18:00:00Z",
+      "t": 286.45,
+      "td": 278.85,
+      "tx": 288.25,
+      "tn": 286.45,
+      "u": 60,
+      "ux": 60,
+      "un": 57,
+      "dd": 160,
+      "ff": 2.5,
+      "dxy": 160,
+      "fxy": 3.5,
+      "dxi": 160,
+      "fxi": 5.8,
+      "rr1": 0,
+      "t_10": null,
+      "t_20": null,
+      "t_50": null,
+      "t_100": null,
+      "vv": null,
+      "etat_sol": null,
+      "sss": null,
+      "n": null,
+      "insolh": null,
+      "ray_glo01": null,
+      "pres": null,
+      "pmer": null
+    }
+  ]
+}

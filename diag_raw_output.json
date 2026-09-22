@@ -1,0 +1,379 @@
+{
+  "date": "2026-03-03T10:18:00Z",
+  "totalStations": 1939,
+  "allKeys": [
+    "lat",
+    "lon",
+    "geo_id_insee",
+    "reference_time",
+    "insert_time",
+    "validity_time",
+    "t",
+    "td",
+    "u",
+    "dd",
+    "ff",
+    "dxi10",
+    "fxi10",
+    "rr_per",
+    "t_10",
+    "t_20",
+    "t_50",
+    "t_100",
+    "vv",
+    "etat_sol",
+    "sss",
+    "insolh",
+    "ray_glo01",
+    "pres",
+    "pmer"
+  ],
+  "keyStats": {
+    "lat": {
+      "present": 1939,
+      "nonNull": 1939
+    },
+    "lon": {
+      "present": 1939,
+      "nonNull": 1939
+    },
+    "geo_id_insee": {
+      "present": 1939,
+      "nonNull": 1939
+    },
+    "reference_time": {
+      "present": 1939,
+      "nonNull": 1939
+    },
+    "insert_time": {
+      "present": 1939,
+      "nonNull": 1939
+    },
+    "validity_time": {
+      "present": 1939,
+      "nonNull": 1939
+    },
+    "t": {
+      "present": 1939,
+      "nonNull": 1899
+    },
+    "td": {
+      "present": 1939,
+      "nonNull": 750
+    },
+    "u": {
+      "present": 1939,
+      "nonNull": 751
+    },
+    "dd": {
+      "present": 1939,
+      "nonNull": 768
+    },
+    "ff": {
+      "present": 1939,
+      "nonNull": 768
+    },
+    "dxi10": {
+      "present": 1939,
+      "nonNull": 768
+    },
+    "fxi10": {
+      "present": 1939,
+      "nonNull": 768
+    },
+    "rr_per": {
+      "present": 1939,
+      "nonNull": 1905
+    },
+    "t_10": {
+      "present": 1939,
+      "nonNull": 129
+    },
+    "t_20": {
+      "present": 1939,
+      "nonNull": 111
+    },
+    "t_50": {
+      "present": 1939,
+      "nonNull": 106
+    },
+    "t_100": {
+      "present": 1939,
+      "nonNull": 92
+    },
+    "vv": {
+      "present": 1939,
+      "nonNull": 156
+    },
+    "etat_sol": {
+      "present": 1939,
+      "nonNull": 79
+    },
+    "sss": {
+      "present": 1939,
+      "nonNull": 248
+    },
+    "insolh": {
+      "present": 1939,
+      "nonNull": 214
+    },
+    "ray_glo01": {
+      "present": 1939,
+      "nonNull": 215
+    },
+    "pres": {
+      "present": 1939,
+      "nonNull": 213
+    },
+    "pmer": {
+      "present": 1939,
+      "nonNull": 203
+    }
+  },
+  "sampleStations": {
+    "RENNES-ST JACQUES": {
+      "lat": 48.068833,
+      "lon": -1.734,
+      "geo_id_insee": "35281001",
+      "reference_time": "2026-03-03T10:24:08Z",
+      "insert_time": "2026-03-03T10:21:29Z",
+      "validity_time": "2026-03-03T10:18:00Z",
+      "t": 283.05,
+      "td": 281.35,
+      "u": 89,
+      "dd": 300,
+      "ff": 1,
+      "dxi10": 320,
+      "fxi10": 1.5,
+      "rr_per": 0,
+      "t_10": 282.55,
+      "t_20": 282.95,
+      "t_50": 283.45,
+      "t_100": 283.45,
+      "vv": 14600,
+      "etat_sol": 0,
+      "sss": 0,
+      "insolh": 0,
+      "ray_glo01": 95700,
+      "pres": 101990,
+      "pmer": 102440
+    },
+    "PARIS-ORLY": "NOT_FOUND",
+    "TOULOUSE-BLAGNAC": {
+      "lat": 43.621,
+      "lon": 1.378833,
+      "geo_id_insee": "31069001",
+      "reference_time": "2026-03-03T10:24:08Z",
+      "insert_time": "2026-03-03T10:21:29Z",
+      "validity_time": "2026-03-03T10:18:00Z",
+      "t": 287.35,
+      "td": 282.75,
+      "u": 74,
+      "dd": 120,
+      "ff": 6.8,
+      "dxi10": 140,
+      "fxi10": 11.3,
+      "rr_per": 0,
+      "t_10": 284.25,
+      "t_20": 284.25,
+      "t_50": 284.45,
+      "t_100": 284.65,
+      "vv": 19860,
+      "etat_sol": 0,
+      "sss": 0,
+      "insolh": 0,
+      "ray_glo01": 96200,
+      "pres": 100420,
+      "pmer": 102210
+    },
+    "BOURBON_SAPC": {
+      "lat": 46.58,
+      "lon": 3.0495,
+      "geo_id_insee": "03036002",
+      "reference_time": "2026-03-03T10:24:08Z",
+      "insert_time": "2026-03-03T10:21:29Z",
+      "validity_time": "2026-03-03T10:18:00Z",
+      "t": 285.95,
+      "td": null,
+      "u": null,
+      "dd": null,
+      "ff": null,
+      "dxi10": null,
+      "fxi10": null,
+      "rr_per": 0,
+      "t_10": null,
+      "t_20": null,
+      "t_50": null,
+      "t_100": null,
+      "vv": null,
+      "etat_sol": null,
+      "sss": null,
+      "insolh": null,
+      "ray_glo01": null,
+      "pres": null,
+      "pmer": null
+    },
+    "AILLEVILLE_SAPC": {
+      "lat": 48.254167,
+      "lon": 4.685667,
+      "geo_id_insee": "10002001",
+      "reference_time": "2026-03-03T10:24:08Z",
+      "insert_time": "2026-03-03T10:20:24Z",
+      "validity_time": "2026-03-03T10:18:00Z",
+      "t": 287.45,
+      "td": null,
+      "u": null,
+      "dd": null,
+      "ff": null,
+      "dxi10": null,
+      "fxi10": null,
+      "rr_per": 0,
+      "t_10": null,
+      "t_20": null,
+      "t_50": null,
+      "t_100": null,
+      "vv": null,
+      "etat_sol": null,
+      "sss": null,
+      "insolh": null,
+      "ray_glo01": null,
+      "pres": null,
+      "pmer": null
+    },
+    "AUBUSSON_SAPC": {
+      "lat": 45.957833,
+      "lon": 2.187833,
+      "geo_id_insee": "23008004",
+      "reference_time": "2026-03-03T10:24:08Z",
+      "insert_time": "2026-03-03T10:20:24Z",
+      "validity_time": "2026-03-03T10:18:00Z",
+      "t": 287.25,
+      "td": null,
+      "u": null,
+      "dd": null,
+      "ff": null,
+      "dxi10": null,
+      "fxi10": null,
+      "rr_per": 0,
+      "t_10": null,
+      "t_20": null,
+      "t_50": null,
+      "t_100": null,
+      "vv": null,
+      "etat_sol": null,
+      "sss": null,
+      "insolh": null,
+      "ray_glo01": null,
+      "pres": null,
+      "pmer": null
+    },
+    "ALPUECH": {
+      "lat": 44.756,
+      "lon": 2.868167,
+      "geo_id_insee": "12005001",
+      "reference_time": "2026-03-03T10:24:08Z",
+      "insert_time": "2026-03-03T10:20:24Z",
+      "validity_time": "2026-03-03T10:18:00Z",
+      "t": 280.75,
+      "td": 277.35,
+      "u": 79,
+      "dd": 170,
+      "ff": 6.8,
+      "dxi10": 170,
+      "fxi10": 11.7,
+      "rr_per": 0,
+      "t_10": null,
+      "t_20": null,
+      "t_50": null,
+      "t_100": null,
+      "vv": null,
+      "etat_sol": null,
+      "sss": null,
+      "insolh": null,
+      "ray_glo01": null,
+      "pres": null,
+      "pmer": null
+    },
+    "AMBERT": {
+      "lat": 45.516833,
+      "lon": 3.742667,
+      "geo_id_insee": "63003004",
+      "reference_time": "2026-03-03T10:24:08Z",
+      "insert_time": "2026-03-03T10:20:24Z",
+      "validity_time": "2026-03-03T10:18:00Z",
+      "t": 285.65,
+      "td": 278.75,
+      "u": 63,
+      "dd": 220,
+      "ff": 1.4,
+      "dxi10": 220,
+      "fxi10": 3.4,
+      "rr_per": 0,
+      "t_10": null,
+      "t_20": null,
+      "t_50": null,
+      "t_100": null,
+      "vv": null,
+      "etat_sol": null,
+      "sss": null,
+      "insolh": null,
+      "ray_glo01": null,
+      "pres": null,
+      "pmer": null
+    },
+    "ARBENT": {
+      "lat": 46.278167,
+      "lon": 5.669,
+      "geo_id_insee": "01014002",
+      "reference_time": "2026-03-03T10:24:08Z",
+      "insert_time": "2026-03-03T10:20:24Z",
+      "validity_time": "2026-03-03T10:18:00Z",
+      "t": 285.25,
+      "td": 278.45,
+      "u": 63,
+      "dd": 320,
+      "ff": 1.6,
+      "dxi10": 320,
+      "fxi10": 3.1,
+      "rr_per": 0,
+      "t_10": null,
+      "t_20": null,
+      "t_50": null,
+      "t_100": null,
+      "vv": null,
+      "etat_sol": null,
+      "sss": 0,
+      "insolh": null,
+      "ray_glo01": null,
+      "pres": null,
+      "pmer": null
+    },
+    "DOUAI": {
+      "lat": 50.389667,
+      "lon": 3.067167,
+      "geo_id_insee": "59178001",
+      "reference_time": "2026-03-03T10:24:08Z",
+      "insert_time": "2026-03-03T10:21:29Z",
+      "validity_time": "2026-03-03T10:18:00Z",
+      "t": 286.95,
+      "td": null,
+      "u": null,
+      "dd": null,
+      "ff": null,
+      "dxi10": null,
+      "fxi10": null,
+      "rr_per": 0,
+      "t_10": null,
+      "t_20": null,
+      "t_50": null,
+      "t_100": null,
+      "vv": null,
+      "etat_sol": null,
+      "sss": null,
+      "insolh": null,
+      "ray_glo01": null,
+      "pres": null,
+      "pmer": null
+    }
+  }
+}

@@ -1,0 +1,1832 @@
+﻿[
+    {
+        "Date":  "Janvier",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "12345678910111213141516171819202122232425262728293031-20-1001020",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "Record Maxi",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "Moyenne des maxi",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "Moyenne des mini",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "Record Mini",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "Découvrez les records de températures par mois:",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 janvier",
+        "Max":  "-17.0",
+        "Min":  1971
+    },
+    {
+        "Date":  "2 janvier",
+        "Max":  "-14.0",
+        "Min":  1979
+    },
+    {
+        "Date":  "3 janvier",
+        "Max":  "-10.8",
+        "Min":  1997
+    },
+    {
+        "Date":  "4 janvier",
+        "Max":  "-10.0",
+        "Min":  1979
+    },
+    {
+        "Date":  "5 janvier",
+        "Max":  "-14.9",
+        "Min":  1985
+    },
+    {
+        "Date":  "6 janvier",
+        "Max":  "-15.5",
+        "Min":  1985
+    },
+    {
+        "Date":  "7 janvier",
+        "Max":  "-11.0",
+        "Min":  1979
+    },
+    {
+        "Date":  "8 janvier",
+        "Max":  "-19.0",
+        "Min":  1985
+    },
+    {
+        "Date":  "9 janvier",
+        "Max":  "-11.1",
+        "Min":  1985
+    },
+    {
+        "Date":  "10 janvier",
+        "Max":  "-15.8",
+        "Min":  1985
+    },
+    {
+        "Date":  "11 janvier",
+        "Max":  "-10.8",
+        "Min":  1963
+    },
+    {
+        "Date":  "12 janvier",
+        "Max":  "-13.3",
+        "Min":  1987
+    },
+    {
+        "Date":  "13 janvier",
+        "Max":  "-19.2",
+        "Min":  1982
+    },
+    {
+        "Date":  "14 janvier",
+        "Max":  "-19.5",
+        "Min":  1982
+    },
+    {
+        "Date":  "15 janvier",
+        "Max":  "-14.0",
+        "Min":  1982
+    },
+    {
+        "Date":  "16 janvier",
+        "Max":  "-17.8",
+        "Min":  1985
+    },
+    {
+        "Date":  "17 janvier",
+        "Max":  "-18.6",
+        "Min":  1985
+    },
+    {
+        "Date":  "18 janvier",
+        "Max":  "-16.0",
+        "Min":  1963
+    },
+    {
+        "Date":  "19 janvier",
+        "Max":  "-16.6",
+        "Min":  1966
+    },
+    {
+        "Date":  "20 janvier",
+        "Max":  "-8.8",
+        "Min":  1966
+    },
+    {
+        "Date":  "21 janvier",
+        "Max":  "-10.8",
+        "Min":  1963
+    },
+    {
+        "Date":  "22 janvier",
+        "Max":  "-13.8",
+        "Min":  1963
+    },
+    {
+        "Date":  "23 janvier",
+        "Max":  "-11.2",
+        "Min":  1963
+    },
+    {
+        "Date":  "24 janvier",
+        "Max":  "-13.0",
+        "Min":  1945
+    },
+    {
+        "Date":  "25 janvier",
+        "Max":  "-17.6",
+        "Min":  1945
+    },
+    {
+        "Date":  "26 janvier",
+        "Max":  "-16.3",
+        "Min":  1945
+    },
+    {
+        "Date":  "27 janvier",
+        "Max":  "-10.2",
+        "Min":  1954
+    },
+    {
+        "Date":  "28 janvier",
+        "Max":  "-12.3",
+        "Min":  1952
+    },
+    {
+        "Date":  "29 janvier",
+        "Max":  "-13.1",
+        "Min":  1947
+    },
+    {
+        "Date":  "30 janvier",
+        "Max":  "-12.2",
+        "Min":  1947
+    },
+    {
+        "Date":  "31 janvier",
+        "Max":  "-11.2",
+        "Min":  1954
+    },
+    {
+        "Date":  "",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 février",
+        "Max":  "-14.3",
+        "Min":  1956
+    },
+    {
+        "Date":  "2 février",
+        "Max":  "-15.6",
+        "Min":  1956
+    },
+    {
+        "Date":  "3 février",
+        "Max":  "-11.7",
+        "Min":  1956
+    },
+    {
+        "Date":  "4 février",
+        "Max":  "-9.3",
+        "Min":  1954
+    },
+    {
+        "Date":  "5 février",
+        "Max":  "-10.4",
+        "Min":  1954
+    },
+    {
+        "Date":  "6 février",
+        "Max":  "-12.5",
+        "Min":  1963
+    },
+    {
+        "Date":  "7 février",
+        "Max":  "-12.7",
+        "Min":  1991
+    },
+    {
+        "Date":  "8 février",
+        "Max":  "-11.3",
+        "Min":  1953
+    },
+    {
+        "Date":  "9 février",
+        "Max":  "-8.8",
+        "Min":  1986
+    },
+    {
+        "Date":  "10 février",
+        "Max":  "-10.8",
+        "Min":  1986
+    },
+    {
+        "Date":  "11 février",
+        "Max":  "-10.6",
+        "Min":  1956
+    },
+    {
+        "Date":  "12 février",
+        "Max":  "-10.5",
+        "Min":  1985
+    },
+    {
+        "Date":  "13 février",
+        "Max":  "-11.4",
+        "Min":  1985
+    },
+    {
+        "Date":  "14 février",
+        "Max":  "-13.3",
+        "Min":  1956
+    },
+    {
+        "Date":  "15 février",
+        "Max":  "-9.6",
+        "Min":  1956
+    },
+    {
+        "Date":  "16 février",
+        "Max":  "-9.1",
+        "Min":  1985
+    },
+    {
+        "Date":  "17 février",
+        "Max":  "-9.4",
+        "Min":  1956
+    },
+    {
+        "Date":  "18 février",
+        "Max":  "-13.4",
+        "Min":  1956
+    },
+    {
+        "Date":  "19 février",
+        "Max":  "-13.0",
+        "Min":  1956
+    },
+    {
+        "Date":  "20 février",
+        "Max":  "-13.5",
+        "Min":  1956
+    },
+    {
+        "Date":  "21 février",
+        "Max":  "-17.8",
+        "Min":  1956
+    },
+    {
+        "Date":  "22 février",
+        "Max":  "-12.2",
+        "Min":  1956
+    },
+    {
+        "Date":  "23 février",
+        "Max":  "-15.6",
+        "Min":  1956
+    },
+    {
+        "Date":  "24 février",
+        "Max":  "-15.1",
+        "Min":  1956
+    },
+    {
+        "Date":  "25 février",
+        "Max":  "-12.9",
+        "Min":  1956
+    },
+    {
+        "Date":  "26 février",
+        "Max":  "-11.7",
+        "Min":  1956
+    },
+    {
+        "Date":  "27 février",
+        "Max":  "-9.3",
+        "Min":  1986
+    },
+    {
+        "Date":  "28 février",
+        "Max":  "-7.7",
+        "Min":  2018
+    },
+    {
+        "Date":  "29 février",
+        "Max":  "-3.2",
+        "Min":  1968
+    },
+    {
+        "Date":  "",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 mars",
+        "Max":  "-7.1",
+        "Min":  1955
+    },
+    {
+        "Date":  "2 mars",
+        "Max":  "-7.0",
+        "Min":  1947
+    },
+    {
+        "Date":  "3 mars",
+        "Max":  "-6.9",
+        "Min":  1965
+    },
+    {
+        "Date":  "4 mars",
+        "Max":  "-7.4",
+        "Min":  2005
+    },
+    {
+        "Date":  "5 mars",
+        "Max":  "-8.0",
+        "Min":  1971
+    },
+    {
+        "Date":  "6 mars",
+        "Max":  "-8.0",
+        "Min":  1971
+    },
+    {
+        "Date":  "7 mars",
+        "Max":  "-8.5",
+        "Min":  1971
+    },
+    {
+        "Date":  "8 mars",
+        "Max":  "-8.3",
+        "Min":  1971
+    },
+    {
+        "Date":  "9 mars",
+        "Max":  "-8.8",
+        "Min":  1970
+    },
+    {
+        "Date":  "10 mars",
+        "Max":  "-7.8",
+        "Min":  1970
+    },
+    {
+        "Date":  "11 mars",
+        "Max":  "-8.7",
+        "Min":  1958
+    },
+    {
+        "Date":  "12 mars",
+        "Max":  "-5.6",
+        "Min":  1958
+    },
+    {
+        "Date":  "13 mars",
+        "Max":  "-10.5",
+        "Min":  2013
+    },
+    {
+        "Date":  "14 mars",
+        "Max":  "-3.8",
+        "Min":  1955
+    },
+    {
+        "Date":  "15 mars",
+        "Max":  "-4.8",
+        "Min":  1958
+    },
+    {
+        "Date":  "16 mars",
+        "Max":  "-4.8",
+        "Min":  1956
+    },
+    {
+        "Date":  "17 mars",
+        "Max":  "-4.7",
+        "Min":  1962
+    },
+    {
+        "Date":  "18 mars",
+        "Max":  "-3.7",
+        "Min":  1962
+    },
+    {
+        "Date":  "19 mars",
+        "Max":  "-3.1",
+        "Min":  1985
+    },
+    {
+        "Date":  "20 mars",
+        "Max":  "-5.2",
+        "Min":  1958
+    },
+    {
+        "Date":  "21 mars",
+        "Max":  "-3.6",
+        "Min":  1958
+    },
+    {
+        "Date":  "22 mars",
+        "Max":  "-3.3",
+        "Min":  1958
+    },
+    {
+        "Date":  "23 mars",
+        "Max":  "-4.0",
+        "Min":  1958
+    },
+    {
+        "Date":  "24 mars",
+        "Max":  "-3.0",
+        "Min":  1958
+    },
+    {
+        "Date":  "25 mars",
+        "Max":  "-3.7",
+        "Min":  1962
+    },
+    {
+        "Date":  "26 mars",
+        "Max":  "-2.0",
+        "Min":  1982
+    },
+    {
+        "Date":  "27 mars",
+        "Max":  "-2.3",
+        "Min":  1993
+    },
+    {
+        "Date":  "28 mars",
+        "Max":  "-3.2",
+        "Min":  1969
+    },
+    {
+        "Date":  "29 mars",
+        "Max":  "-3.0",
+        "Min":  1969
+    },
+    {
+        "Date":  "30 mars",
+        "Max":  "-2.1",
+        "Min":  2013
+    },
+    {
+        "Date":  "31 mars",
+        "Max":  "-3.5",
+        "Min":  1977
+    },
+    {
+        "Date":  "",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 avril",
+        "Max":  "-2.2",
+        "Min":  1967
+    },
+    {
+        "Date":  "2 avril",
+        "Max":  "-2.8",
+        "Min":  1958
+    },
+    {
+        "Date":  "3 avril",
+        "Max":  "-3.0",
+        "Min":  1958
+    },
+    {
+        "Date":  "4 avril",
+        "Max":  "-1.5",
+        "Min":  1973
+    },
+    {
+        "Date":  "5 avril",
+        "Max":  "-2.3",
+        "Min":  1990
+    },
+    {
+        "Date":  "6 avril",
+        "Max":  "-2.2",
+        "Min":  1968
+    },
+    {
+        "Date":  "7 avril",
+        "Max":  "-3.2",
+        "Min":  2013
+    },
+    {
+        "Date":  "8 avril",
+        "Max":  "-2.4",
+        "Min":  1968
+    },
+    {
+        "Date":  "9 avril",
+        "Max":  "-4.7",
+        "Min":  1968
+    },
+    {
+        "Date":  "10 avril",
+        "Max":  "-2.5",
+        "Min":  1990
+    },
+    {
+        "Date":  "11 avril",
+        "Max":  "-2.5",
+        "Min":  2003
+    },
+    {
+        "Date":  "12 avril",
+        "Max":  "-2.3",
+        "Min":  1986
+    },
+    {
+        "Date":  "13 avril",
+        "Max":  "-1.9",
+        "Min":  1986
+    },
+    {
+        "Date":  "14 avril",
+        "Max":  "-2.4",
+        "Min":  1966
+    },
+    {
+        "Date":  "15 avril",
+        "Max":  "-1.5",
+        "Min":  1957
+    },
+    {
+        "Date":  "16 avril",
+        "Max":  "-1.4",
+        "Min":  1977
+    },
+    {
+        "Date":  "17 avril",
+        "Max":  "-1.5",
+        "Min":  1978
+    },
+    {
+        "Date":  "18 avril",
+        "Max":  "-0.7",
+        "Min":  1956
+    },
+    {
+        "Date":  "19 avril",
+        "Max":  "-2.0",
+        "Min":  1967
+    },
+    {
+        "Date":  "20 avril",
+        "Max":  "-3.0",
+        "Min":  1969
+    },
+    {
+        "Date":  "21 avril",
+        "Max":  "-1.8",
+        "Min":  1991
+    },
+    {
+        "Date":  "22 avril",
+        "Max":  "-1.6",
+        "Min":  1967
+    },
+    {
+        "Date":  "23 avril",
+        "Max":  "-0.8",
+        "Min":  1946
+    },
+    {
+        "Date":  "24 avril",
+        "Max":  "-2.0",
+        "Min":  1981
+    },
+    {
+        "Date":  "25 avril",
+        "Max":  "-2.2",
+        "Min":  1955
+    },
+    {
+        "Date":  "26 avril",
+        "Max":  "-1.0",
+        "Min":  1985
+    },
+    {
+        "Date":  "27 avril",
+        "Max":  "-0.9",
+        "Min":  1949
+    },
+    {
+        "Date":  "28 avril",
+        "Max":  "-0.8",
+        "Min":  1970
+    },
+    {
+        "Date":  "29 avril",
+        "Max":  "-0.3",
+        "Min":  1971
+    },
+    {
+        "Date":  "30 avril",
+        "Max":  "-1.1",
+        "Min":  1976
+    },
+    {
+        "Date":  "",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 mai",
+        "Max":  "-0.8",
+        "Min":  1945
+    },
+    {
+        "Date":  "2 mai",
+        "Max":  "-0.5",
+        "Min":  1967
+    },
+    {
+        "Date":  "3 mai",
+        "Max":  "-2.3",
+        "Min":  1967
+    },
+    {
+        "Date":  "4 mai",
+        "Max":  "0.6",
+        "Min":  1963
+    },
+    {
+        "Date":  "5 mai",
+        "Max":  "-0.1",
+        "Min":  1979
+    },
+    {
+        "Date":  "6 mai",
+        "Max":  "-0.5",
+        "Min":  1957
+    },
+    {
+        "Date":  "7 mai",
+        "Max":  "-1.0",
+        "Min":  1957
+    },
+    {
+        "Date":  "8 mai",
+        "Max":  "0.1",
+        "Min":  1949
+    },
+    {
+        "Date":  "9 mai",
+        "Max":  "0.7",
+        "Min":  1977
+    },
+    {
+        "Date":  "10 mai",
+        "Max":  "0.4",
+        "Min":  1949
+    },
+    {
+        "Date":  "11 mai",
+        "Max":  "1.2",
+        "Min":  1982
+    },
+    {
+        "Date":  "12 mai",
+        "Max":  "0.9",
+        "Min":  1955
+    },
+    {
+        "Date":  "13 mai",
+        "Max":  "2.4",
+        "Min":  1953
+    },
+    {
+        "Date":  "14 mai",
+        "Max":  "0.3",
+        "Min":  1995
+    },
+    {
+        "Date":  "15 mai",
+        "Max":  "0.0",
+        "Min":  1973
+    },
+    {
+        "Date":  "16 mai",
+        "Max":  "1.3",
+        "Min":  1946
+    },
+    {
+        "Date":  "17 mai",
+        "Max":  "1.5",
+        "Min":  1946
+    },
+    {
+        "Date":  "18 mai",
+        "Max":  "1.8",
+        "Min":  1968
+    },
+    {
+        "Date":  "19 mai",
+        "Max":  "1.6",
+        "Min":  1955
+    },
+    {
+        "Date":  "20 mai",
+        "Max":  "-0.1",
+        "Min":  1968
+    },
+    {
+        "Date":  "21 mai",
+        "Max":  "1.2",
+        "Min":  1965
+    },
+    {
+        "Date":  "22 mai",
+        "Max":  "-0.5",
+        "Min":  1955
+    },
+    {
+        "Date":  "23 mai",
+        "Max":  "2.6",
+        "Min":  1957
+    },
+    {
+        "Date":  "24 mai",
+        "Max":  "3.5",
+        "Min":  2013
+    },
+    {
+        "Date":  "25 mai",
+        "Max":  "3.1",
+        "Min":  1962
+    },
+    {
+        "Date":  "26 mai",
+        "Max":  "5.0",
+        "Min":  1981
+    },
+    {
+        "Date":  "27 mai",
+        "Max":  "2.7",
+        "Min":  1969
+    },
+    {
+        "Date":  "28 mai",
+        "Max":  "0.4",
+        "Min":  1961
+    },
+    {
+        "Date":  "29 mai",
+        "Max":  "-0.5",
+        "Min":  1961
+    },
+    {
+        "Date":  "30 mai",
+        "Max":  "2.1",
+        "Min":  1961
+    },
+    {
+        "Date":  "31 mai",
+        "Max":  "2.8",
+        "Min":  1962
+    },
+    {
+        "Date":  "",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 juin",
+        "Max":  "1.6",
+        "Min":  1975
+    },
+    {
+        "Date":  "2 juin",
+        "Max":  "0.0",
+        "Min":  1962
+    },
+    {
+        "Date":  "3 juin",
+        "Max":  "1.8",
+        "Min":  1962
+    },
+    {
+        "Date":  "4 juin",
+        "Max":  "2.9",
+        "Min":  1975
+    },
+    {
+        "Date":  "5 juin",
+        "Max":  "2.8",
+        "Min":  1975
+    },
+    {
+        "Date":  "6 juin",
+        "Max":  "5.6",
+        "Min":  1976
+    },
+    {
+        "Date":  "7 juin",
+        "Max":  "4.9",
+        "Min":  1989
+    },
+    {
+        "Date":  "8 juin",
+        "Max":  "4.6",
+        "Min":  1952
+    },
+    {
+        "Date":  "9 juin",
+        "Max":  "2.0",
+        "Min":  2001
+    },
+    {
+        "Date":  "10 juin",
+        "Max":  "4.5",
+        "Min":  1967
+    },
+    {
+        "Date":  "11 juin",
+        "Max":  "2.1",
+        "Min":  1955
+    },
+    {
+        "Date":  "12 juin",
+        "Max":  "4.9",
+        "Min":  2011
+    },
+    {
+        "Date":  "13 juin",
+        "Max":  "5.9",
+        "Min":  1947
+    },
+    {
+        "Date":  "14 juin",
+        "Max":  "3.5",
+        "Min":  1967
+    },
+    {
+        "Date":  "15 juin",
+        "Max":  "4.1",
+        "Min":  1954
+    },
+    {
+        "Date":  "16 juin",
+        "Max":  "1.8",
+        "Min":  1949
+    },
+    {
+        "Date":  "17 juin",
+        "Max":  "2.1",
+        "Min":  1949
+    },
+    {
+        "Date":  "18 juin",
+        "Max":  "5.6",
+        "Min":  1949
+    },
+    {
+        "Date":  "19 juin",
+        "Max":  "5.8",
+        "Min":  1951
+    },
+    {
+        "Date":  "20 juin",
+        "Max":  "4.8",
+        "Min":  1951
+    },
+    {
+        "Date":  "21 juin",
+        "Max":  "5.2",
+        "Min":  1948
+    },
+    {
+        "Date":  "22 juin",
+        "Max":  "5.9",
+        "Min":  1956
+    },
+    {
+        "Date":  "23 juin",
+        "Max":  "4.0",
+        "Min":  1949
+    },
+    {
+        "Date":  "24 juin",
+        "Max":  "4.4",
+        "Min":  1964
+    },
+    {
+        "Date":  "25 juin",
+        "Max":  "4.4",
+        "Min":  1949
+    },
+    {
+        "Date":  "26 juin",
+        "Max":  "6.8",
+        "Min":  1957
+    },
+    {
+        "Date":  "27 juin",
+        "Max":  "4.9",
+        "Min":  1962
+    },
+    {
+        "Date":  "28 juin",
+        "Max":  "6.6",
+        "Min":  1954
+    },
+    {
+        "Date":  "29 juin",
+        "Max":  "5.8",
+        "Min":  1960
+    },
+    {
+        "Date":  "30 juin",
+        "Max":  "5.2",
+        "Min":  1962
+    },
+    {
+        "Date":  "",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 juillet",
+        "Max":  "4.3",
+        "Min":  1954
+    },
+    {
+        "Date":  "2 juillet",
+        "Max":  "5.0",
+        "Min":  1965
+    },
+    {
+        "Date":  "3 juillet",
+        "Max":  "6.5",
+        "Min":  1979
+    },
+    {
+        "Date":  "4 juillet",
+        "Max":  "4.3",
+        "Min":  1965
+    },
+    {
+        "Date":  "5 juillet",
+        "Max":  "3.4",
+        "Min":  1964
+    },
+    {
+        "Date":  "6 juillet",
+        "Max":  "7.0",
+        "Min":  1947
+    },
+    {
+        "Date":  "7 juillet",
+        "Max":  "4.0",
+        "Min":  1949
+    },
+    {
+        "Date":  "8 juillet",
+        "Max":  "6.8",
+        "Min":  1954
+    },
+    {
+        "Date":  "9 juillet",
+        "Max":  "7.3",
+        "Min":  1969
+    },
+    {
+        "Date":  "10 juillet",
+        "Max":  "5.1",
+        "Min":  1969
+    },
+    {
+        "Date":  "11 juillet",
+        "Max":  "7.0",
+        "Min":  1972
+    },
+    {
+        "Date":  "12 juillet",
+        "Max":  "6.8",
+        "Min":  2000
+    },
+    {
+        "Date":  "13 juillet",
+        "Max":  "8.0",
+        "Min":  1970
+    },
+    {
+        "Date":  "14 juillet",
+        "Max":  "7.5",
+        "Min":  1959
+    },
+    {
+        "Date":  "15 juillet",
+        "Max":  "5.4",
+        "Min":  1959
+    },
+    {
+        "Date":  "16 juillet",
+        "Max":  "5.9",
+        "Min":  1977
+    },
+    {
+        "Date":  "17 juillet",
+        "Max":  "5.0",
+        "Min":  1971
+    },
+    {
+        "Date":  "18 juillet",
+        "Max":  "6.8",
+        "Min":  1971
+    },
+    {
+        "Date":  "19 juillet",
+        "Max":  "7.6",
+        "Min":  1986
+    },
+    {
+        "Date":  "20 juillet",
+        "Max":  "6.4",
+        "Min":  1968
+    },
+    {
+        "Date":  "21 juillet",
+        "Max":  "6.8",
+        "Min":  1970
+    },
+    {
+        "Date":  "22 juillet",
+        "Max":  "5.2",
+        "Min":  1968
+    },
+    {
+        "Date":  "23 juillet",
+        "Max":  "7.5",
+        "Min":  1970
+    },
+    {
+        "Date":  "24 juillet",
+        "Max":  "5.6",
+        "Min":  1960
+    },
+    {
+        "Date":  "25 juillet",
+        "Max":  "8.1",
+        "Min":  1958
+    },
+    {
+        "Date":  "26 juillet",
+        "Max":  "6.6",
+        "Min":  1963
+    },
+    {
+        "Date":  "27 juillet",
+        "Max":  "7.6",
+        "Min":  1982
+    },
+    {
+        "Date":  "28 juillet",
+        "Max":  "5.4",
+        "Min":  1966
+    },
+    {
+        "Date":  "29 juillet",
+        "Max":  "7.0",
+        "Min":  1962
+    },
+    {
+        "Date":  "30 juillet",
+        "Max":  "8.0",
+        "Min":  1961
+    },
+    {
+        "Date":  "31 juillet",
+        "Max":  "7.2",
+        "Min":  1961
+    },
+    {
+        "Date":  "",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 août",
+        "Max":  "6.4",
+        "Min":  1965
+    },
+    {
+        "Date":  "2 août",
+        "Max":  "6.9",
+        "Min":  1965
+    },
+    {
+        "Date":  "3 août",
+        "Max":  "8.3",
+        "Min":  1960
+    },
+    {
+        "Date":  "4 août",
+        "Max":  "7.4",
+        "Min":  1955
+    },
+    {
+        "Date":  "5 août",
+        "Max":  "6.1",
+        "Min":  1955
+    },
+    {
+        "Date":  "6 août",
+        "Max":  "7.0",
+        "Min":  1974
+    },
+    {
+        "Date":  "7 août",
+        "Max":  "7.5",
+        "Min":  1987
+    },
+    {
+        "Date":  "8 août",
+        "Max":  "7.0",
+        "Min":  1955
+    },
+    {
+        "Date":  "9 août",
+        "Max":  "6.0",
+        "Min":  1973
+    },
+    {
+        "Date":  "10 août",
+        "Max":  "7.1",
+        "Min":  1963
+    },
+    {
+        "Date":  "11 août",
+        "Max":  "8.8",
+        "Min":  1985
+    },
+    {
+        "Date":  "12 août",
+        "Max":  "6.7",
+        "Min":  1970
+    },
+    {
+        "Date":  "13 août",
+        "Max":  "6.8",
+        "Min":  1961
+    },
+    {
+        "Date":  "14 août",
+        "Max":  "8.2",
+        "Min":  1994
+    },
+    {
+        "Date":  "15 août",
+        "Max":  "6.8",
+        "Min":  1970
+    },
+    {
+        "Date":  "16 août",
+        "Max":  "5.0",
+        "Min":  1966
+    },
+    {
+        "Date":  "17 août",
+        "Max":  "4.8",
+        "Min":  1966
+    },
+    {
+        "Date":  "18 août",
+        "Max":  "6.0",
+        "Min":  1970
+    },
+    {
+        "Date":  "19 août",
+        "Max":  "5.9",
+        "Min":  1968
+    },
+    {
+        "Date":  "20 août",
+        "Max":  "5.7",
+        "Min":  1972
+    },
+    {
+        "Date":  "21 août",
+        "Max":  "5.8",
+        "Min":  1986
+    },
+    {
+        "Date":  "22 août",
+        "Max":  "7.3",
+        "Min":  1957
+    },
+    {
+        "Date":  "23 août",
+        "Max":  "6.0",
+        "Min":  1964
+    },
+    {
+        "Date":  "24 août",
+        "Max":  "4.9",
+        "Min":  1966
+    },
+    {
+        "Date":  "25 août",
+        "Max":  "5.0",
+        "Min":  1966
+    },
+    {
+        "Date":  "26 août",
+        "Max":  "6.1",
+        "Min":  1979
+    },
+    {
+        "Date":  "27 août",
+        "Max":  "6.8",
+        "Min":  1978
+    },
+    {
+        "Date":  "28 août",
+        "Max":  "4.5",
+        "Min":  1978
+    },
+    {
+        "Date":  "29 août",
+        "Max":  "5.1",
+        "Min":  1963
+    },
+    {
+        "Date":  "30 août",
+        "Max":  "4.8",
+        "Min":  1963
+    },
+    {
+        "Date":  "31 août",
+        "Max":  "3.9",
+        "Min":  1956
+    },
+    {
+        "Date":  "",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 septembre",
+        "Max":  "6.0",
+        "Min":  2012
+    },
+    {
+        "Date":  "2 septembre",
+        "Max":  "6.0",
+        "Min":  1962
+    },
+    {
+        "Date":  "3 septembre",
+        "Max":  "5.5",
+        "Min":  1982
+    },
+    {
+        "Date":  "4 septembre",
+        "Max":  "5.0",
+        "Min":  1957
+    },
+    {
+        "Date":  "5 septembre",
+        "Max":  "4.8",
+        "Min":  1986
+    },
+    {
+        "Date":  "6 septembre",
+        "Max":  "4.5",
+        "Min":  1993
+    },
+    {
+        "Date":  "7 septembre",
+        "Max":  "2.1",
+        "Min":  1952
+    },
+    {
+        "Date":  "8 septembre",
+        "Max":  "3.9",
+        "Min":  1967
+    },
+    {
+        "Date":  "9 septembre",
+        "Max":  "4.4",
+        "Min":  1986
+    },
+    {
+        "Date":  "10 septembre",
+        "Max":  "3.4",
+        "Min":  1967
+    },
+    {
+        "Date":  "11 septembre",
+        "Max":  "3.1",
+        "Min":  1986
+    },
+    {
+        "Date":  "12 septembre",
+        "Max":  "6.1",
+        "Min":  1967
+    },
+    {
+        "Date":  "13 septembre",
+        "Max":  "4.8",
+        "Min":  1952
+    },
+    {
+        "Date":  "14 septembre",
+        "Max":  "4.2",
+        "Min":  1962
+    },
+    {
+        "Date":  "15 septembre",
+        "Max":  "5.5",
+        "Min":  1979
+    },
+    {
+        "Date":  "16 septembre",
+        "Max":  "2.4",
+        "Min":  1971
+    },
+    {
+        "Date":  "17 septembre",
+        "Max":  "1.7",
+        "Min":  1971
+    },
+    {
+        "Date":  "18 septembre",
+        "Max":  "3.2",
+        "Min":  1971
+    },
+    {
+        "Date":  "19 septembre",
+        "Max":  "3.3",
+        "Min":  1977
+    },
+    {
+        "Date":  "20 septembre",
+        "Max":  "1.8",
+        "Min":  1952
+    },
+    {
+        "Date":  "21 septembre",
+        "Max":  "2.4",
+        "Min":  1962
+    },
+    {
+        "Date":  "22 septembre",
+        "Max":  "1.2",
+        "Min":  1948
+    },
+    {
+        "Date":  "23 septembre",
+        "Max":  "1.2",
+        "Min":  1979
+    },
+    {
+        "Date":  "24 septembre",
+        "Max":  "4.5",
+        "Min":  1973
+    },
+    {
+        "Date":  "25 septembre",
+        "Max":  "2.3",
+        "Min":  1979
+    },
+    {
+        "Date":  "26 septembre",
+        "Max":  "4.5",
+        "Min":  1972
+    },
+    {
+        "Date":  "27 septembre",
+        "Max":  "3.7",
+        "Min":  1960
+    },
+    {
+        "Date":  "28 septembre",
+        "Max":  "2.0",
+        "Min":  1969
+    },
+    {
+        "Date":  "29 septembre",
+        "Max":  "3.3",
+        "Min":  1964
+    },
+    {
+        "Date":  "30 septembre",
+        "Max":  "2.8",
+        "Min":  1954
+    },
+    {
+        "Date":  "",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 octobre",
+        "Max":  "1.7",
+        "Min":  1988
+    },
+    {
+        "Date":  "2 octobre",
+        "Max":  "2.1",
+        "Min":  1969
+    },
+    {
+        "Date":  "3 octobre",
+        "Max":  "2.0",
+        "Min":  1980
+    },
+    {
+        "Date":  "4 octobre",
+        "Max":  "2.2",
+        "Min":  1947
+    },
+    {
+        "Date":  "5 octobre",
+        "Max":  "0.5",
+        "Min":  1972
+    },
+    {
+        "Date":  "6 octobre",
+        "Max":  "0.8",
+        "Min":  1971
+    },
+    {
+        "Date":  "7 octobre",
+        "Max":  "1.3",
+        "Min":  1971
+    },
+    {
+        "Date":  "8 octobre",
+        "Max":  "-0.3",
+        "Min":  1948
+    },
+    {
+        "Date":  "9 octobre",
+        "Max":  "1.4",
+        "Min":  1994
+    },
+    {
+        "Date":  "10 octobre",
+        "Max":  "0.8",
+        "Min":  1951
+    },
+    {
+        "Date":  "11 octobre",
+        "Max":  "0.8",
+        "Min":  1951
+    },
+    {
+        "Date":  "12 octobre",
+        "Max":  "-1.0",
+        "Min":  1952
+    },
+    {
+        "Date":  "13 octobre",
+        "Max":  "0.7",
+        "Min":  1973
+    },
+    {
+        "Date":  "14 octobre",
+        "Max":  "-1.1",
+        "Min":  1964
+    },
+    {
+        "Date":  "15 octobre",
+        "Max":  "-1.7",
+        "Min":  1971
+    },
+    {
+        "Date":  "16 octobre",
+        "Max":  "-0.2",
+        "Min":  1971
+    },
+    {
+        "Date":  "17 octobre",
+        "Max":  "0.0",
+        "Min":  1951
+    },
+    {
+        "Date":  "18 octobre",
+        "Max":  "-0.9",
+        "Min":  1955
+    },
+    {
+        "Date":  "19 octobre",
+        "Max":  "-0.3",
+        "Min":  1972
+    },
+    {
+        "Date":  "20 octobre",
+        "Max":  "-0.1",
+        "Min":  1964
+    },
+    {
+        "Date":  "21 octobre",
+        "Max":  "-1.2",
+        "Min":  1964
+    },
+    {
+        "Date":  "22 octobre",
+        "Max":  "0.1",
+        "Min":  1985
+    },
+    {
+        "Date":  "23 octobre",
+        "Max":  "-3.3",
+        "Min":  1983
+    },
+    {
+        "Date":  "24 octobre",
+        "Max":  "-3.5",
+        "Min":  1983
+    },
+    {
+        "Date":  "25 octobre",
+        "Max":  "-3.4",
+        "Min":  1946
+    },
+    {
+        "Date":  "26 octobre",
+        "Max":  "-3.0",
+        "Min":  1985
+    },
+    {
+        "Date":  "27 octobre",
+        "Max":  "-4.0",
+        "Min":  1950
+    },
+    {
+        "Date":  "28 octobre",
+        "Max":  "-4.4",
+        "Min":  1950
+    },
+    {
+        "Date":  "29 octobre",
+        "Max":  "-2.7",
+        "Min":  1997
+    },
+    {
+        "Date":  "30 octobre",
+        "Max":  "-3.4",
+        "Min":  1997
+    },
+    {
+        "Date":  "31 octobre",
+        "Max":  "-2.3",
+        "Min":  1949
+    },
+    {
+        "Date":  "",
+        "Max":  null,
+        "Min":  null
+    },
+    {
+        "Date":  "jours",
+        "Max":  "températures minimales",
+        "Min":  null
+    },
+    {
+        "Date":  "",
+        "Max":  "Mini",
+        "Min":  "Année"
+    },
+    {
+        "Date":  "1 novembre",
+        "Max":  "-3.2",
+        "Min":  1956
+    },
+    {
+        "Date":  "2 novembre",
+        "Max":  "-5.5",
+        "Min":  1955
+    },
+    {
+        "Date":  "3 novembre",
+        "Max":  "-4.7",
+        "Min":  1980
+    },
+    {
+        "Date":  "4 novembre",
+        "Max":  "-4.9",
+        "Min":  1980
+    },
+    {
+        "Date":  "5 novembre",
+        "Max":  "-4.3",
+        "Min":  1988
+    },
+    {
+        "Date":  "6 novembre",
+        "Max":  "-4.1",
+        "Min":  1995
+    },
+    {
+        "Date":  "7 novembre",
+        "Max":  "-1.5",
+        "Min":  1990
+    },
+    {
+        "Date":  "8 novembre",
+        "Max":  "-3.0",
+        "Min":  1980
+    },
+    {
+        "Date":  "9 novembre",
+        "Max":  "-3.3",
+        "Min":  1981
+    },
+    {
+        "Date":  "10 novembre",
+        "Max":  "-3.6",
+        "Min":  1968
+    },
+    {
+        "Date":  "11 novembre",
+        "Max":  "-1.6",
+        "Min":  1948
+    },
+    {
+        "Date":  "12 novembre",
+        "Max":  "-2.8",
+        "Min":  1971
+    },
+    {
+        "Date":  "13 novembre",
+        "Max":  "-4.4",
+        "Min":  1983
+    },
+    {
+        "Date":  "14 novembre",
+        "Max":  "-5.0",
+        "Min":  1965
+    },
+    {
+        "Date":  "15 novembre",
+        "Max":  "-7.8",
+        "Min":  1983
+    },
+    {
+        "Date":  "16 novembre",
+        "Max":  "-7.3",
+        "Min":  1965
+    },
+    {
+        "Date":  "17 novembre",
+        "Max":  "-2.8",
+        "Min":  1968
+    },
+    {
+        "Date":  "18 novembre",
+        "Max":  "-4.2",
+        "Min":  1998
+    },
+    {
+        "Date":  "19 novembre",
+        "Max":  "-3.8",
+        "Min":  1985
+    },
+    {
+        "Date":  "20 novembre",
+        "Max":  "-4.9",
+        "Min":  1985
+    },
+    {
+        "Date":  "21 novembre",
+        "Max":  "-4.6",
+        "Min":  1998
+    },
+    {
+        "Date":  "22 novembre",
+        "Max":  "-6.6",
+        "Min":  1988
+    }
+]
