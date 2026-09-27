@@ -905,6 +905,21 @@ def run(max_hours=51):
     except Exception as e:
         print("WARNING: fond de carte non généré (%s)" % e)
 
+    try:
+        from arome_render import write_places
+        write_places(out_dir)
+    except Exception as e:
+        print("WARNING: communes.json non généré (%s)" % e)
+
+    # Copie de secours des assets géographiques partagés si manquants
+    assets_dir = os.path.join(BASE_DIR, "assets", "maps")
+    if os.path.exists(assets_dir):
+        for asset_name in ["fond.webp", "frontieres.svg", "communes.json", "mask_france.png"]:
+            src_asset = os.path.join(assets_dir, asset_name)
+            dst_asset = os.path.join(out_dir, asset_name)
+            if os.path.exists(src_asset) and (not os.path.exists(dst_asset) or os.path.getsize(dst_asset) == 0):
+                shutil.copy2(src_asset, dst_asset)
+
     from fetch_and_render_all import write_manifest
     meta = {"name": "AROME HD (1,3 km)", "provider": "Meteo-France",
             "resolution": "1,3 km (0.01°)", "run_time": run_str}

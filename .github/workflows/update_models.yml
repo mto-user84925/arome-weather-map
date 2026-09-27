@@ -36,7 +36,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libeccodes-dev libeccodes-tools
           python -m pip install --upgrade pip
-          pip install numpy pillow requests eccodes cfgrib xarray scipy ecmwf-opendata
+          pip install numpy pillow requests eccodes cfgrib xarray scipy ecmwf-opendata shapely
 
       - name: Verification du token AROME
         run: |
@@ -56,6 +56,8 @@ jobs:
       - name: Preparation du site
         run: |
           mkdir -p _site
+          mkdir -p output/arome/maps
+          cp -r assets/maps/* output/arome/maps/ 2>/dev/null || true
           cp index.html _site/ 2>/dev/null || true
           cp previsions.html _site/ 2>/dev/null || true
           cp grele.html _site/ 2>/dev/null || true

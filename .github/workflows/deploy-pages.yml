@@ -50,6 +50,8 @@ jobs:
       - name: Preparation du site (uniquement les fichiers necessaires)
         run: |
           mkdir -p _site
+          mkdir -p output/arome/maps
+          cp -r assets/maps/* output/arome/maps/ 2>/dev/null || true
           cp index.html _site/ 2>/dev/null || true
           cp previsions.html _site/ 2>/dev/null || true
           cp grele.html _site/ 2>/dev/null || true
