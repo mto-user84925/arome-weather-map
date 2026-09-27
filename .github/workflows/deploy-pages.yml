@@ -9,6 +9,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: "pages"
@@ -20,6 +21,31 @@ jobs:
     steps:
       - name: Recuperation du depot
         uses: actions/checkout@v4
+
+      - name: Restaurer les donnees output du dernier deploiement
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          mkdir -p /tmp/base /tmp/base/restored
+          RESTORED=""
+          for RUN_ID in $(gh run list --repo ${{ github.repository }} \
+                --status success --limit 10 --json databaseId,workflowName --jq \
+                '.[] | select(.workflowName | test("Multi-Modeles|Pages|AROME")) | .databaseId' 2>/dev/null || true); do
+            echo "Tentative de restauration depuis le run $RUN_ID..."
+            if gh run download "$RUN_ID" --repo ${{ github.repository }} \
+                 -n github-pages -D /tmp/base >/dev/null 2>&1; then
+              RESTORED="$RUN_ID"
+              break
+            fi
+          done
+          if [ -n "$RESTORED" ]; then
+            tar -xf /tmp/base/artifact.tar -C /tmp/base/restored
+            cp -r /tmp/base/restored/output ./ 2>/dev/null || true
+            echo "Base restauree depuis le run $RESTORED"
+          else
+            echo "Attention : Aucun artefact trouve avec output/"
+          fi
 
       - name: Preparation du site (uniquement les fichiers necessaires)
         run: |

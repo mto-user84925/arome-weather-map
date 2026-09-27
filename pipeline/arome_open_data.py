@@ -914,6 +914,7 @@ def run(max_hours=51):
     try:
         from arome_pe_engine import write_pe_manifest
         out_pe_dir = os.path.join(BASE_DIR, "output", "arome_pe", "maps")
+        os.makedirs(out_pe_dir, exist_ok=True)
         write_pe_manifest(out_pe_dir, steps_pe, run_str)
     except Exception as e:
         print("WARNING: AROME-PE Manifest non écrit (%s)" % e)
