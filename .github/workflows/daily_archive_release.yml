@@ -21,8 +21,7 @@ permissions:
 
 jobs:
   archive-maps:
-    # Pour workflow_run : n'archiver que si le pipeline a réussi
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
