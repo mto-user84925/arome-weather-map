@@ -1,4 +1,4 @@
-﻿# =============================================================================
+# =============================================================================
 # Module Grêle & Convectif (AROME 0,025°) — automatisation dédiée
 # =============================================================================
 # SÉPARÉE de l'automatisation AROME habituelle (1,3 km, cartes de base).
@@ -64,15 +64,7 @@ jobs:
         run: |
           git config --global user.name "Meteo Automations Bot"
           git config --global user.email "bot@meteo-climat.pro"
-          # Seules les sorties du module (répertoires disjoints des cartes de base)
-          git add output/arome/maps/ipo \
-                  output/arome/maps/ipg \
-                  output/arome/maps/ipt \
-                  output/arome/maps/instabilite \
-                  output/arome/maps/orages_simules \
-                  output/arome/maps/rafales_convectives \
-                  output/arome/maps/communes \
-                  'output/arome/maps/*_24h_*.webp'
+          git add -A output/arome/maps/
           if git diff --staged --quiet; then
             echo "Aucune nouvelle carte du module à pousser."
           else

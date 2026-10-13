@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 arome_om.py — Pipeline de téléchargement et rendu AROME Outre-Mer (Antilles & Réunion).
@@ -269,7 +269,7 @@ def render_domain(dom_key, max_hours=48, target_run=None):
         "run": run_str,
         "run_time": run_dt.isoformat(),
         "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-        "bounds": {"south": dom.bounds[0], "west": dom.bounds[1], "north": dom.bounds[2], "east": dom.bounds[3]},
+        "bounds": dom.bounds,
         "overlay": "maps/frontieres.svg",
         "fond": "maps/fond.webp",
         "mask": "maps/mask_france.png",
