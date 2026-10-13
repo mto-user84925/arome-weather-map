@@ -54,21 +54,20 @@ except:
 ")
           echo "Run hour: $RUN_HOUR"
           if [ "$RUN_HOUR" = "0" ] || [ "$RUN_HOUR" = "12" ]; then
-            echo "IS_MAJOR_RUN=true" >> $GITHUB_ENV
+            echo "is_major_run=true" >> $GITHUB_OUTPUT
           else
-            echo "IS_MAJOR_RUN=false" >> $GITHUB_ENV
+            echo "is_major_run=false" >> $GITHUB_OUTPUT
           fi
 
       - name: Generation de l'archive Photos d'antenne (France + Hauts-de-France)
-        if: env.IS_MAJOR_RUN == 'true'
+        if: steps.check_run.outputs.is_major_run == 'true'
         id: package
         run: |
-          MONTH_TAG="archives-$(date -u +'%Y-%m')"
-          echo "MONTH_TAG=${MONTH_TAG}" >> $GITHUB_ENV
+          echo "MONTH_TAG=archives-$(date -u +'%Y-%m')" >> $GITHUB_ENV
           python pipeline/package_archive.py
 
       - name: Publication dans GitHub Releases
-        if: env.IS_MAJOR_RUN == 'true'
+        if: steps.check_run.outputs.is_major_run == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -91,6 +90,6 @@ except:
           done
 
       - name: Info si run non-majeur ignore
-        if: env.IS_MAJOR_RUN != 'true'
+        if: steps.check_run.outputs.is_major_run != 'true'
         run: |
           echo "Run actuel non-00Z/12Z — archivage ignore pour ce cycle."
