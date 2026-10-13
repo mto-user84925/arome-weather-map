@@ -1,4 +1,4 @@
-name: "Archivage Automatique des Cartes (Runs 00Z & 12Z — France + Hauts-de-France)"
+name: Archivage Automatique des Cartes AROME
 
 on:
   # 1. Déclenchement automatique dès que le pipeline météo a terminé avec succès
