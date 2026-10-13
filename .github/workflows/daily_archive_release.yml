@@ -40,17 +40,7 @@ jobs:
       - name: Verification du run courant (00Z ou 12Z uniquement)
         id: check_run
         run: |
-          RUN_HOUR=$(python3 -c "
-import json, sys
-try:
-    with open('output/arome/maps/index.json') as f:
-        d = json.load(f)
-    rt = d.get('run_time', '')
-    hour = int(rt[11:13]) if len(rt) >= 13 else -1
-    print(hour)
-except:
-    print(-1)
-")
+          RUN_HOUR=$(python3 -c "import json, sys; d=json.load(open('output/arome/maps/index.json')) if os.path.exists('output/arome/maps/index.json') else {}; print(int(d.get('run_time','')[11:13]) if len(d.get('run_time',''))>=13 else -1)" 2>/dev/null || echo -1)
           echo "Run hour: $RUN_HOUR"
           if [ "$RUN_HOUR" = "0" ] || [ "$RUN_HOUR" = "12" ]; then
             echo "is_major_run=true" >> $GITHUB_OUTPUT
