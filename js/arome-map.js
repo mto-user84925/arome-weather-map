@@ -337,6 +337,29 @@
 
         var alphaMaskVersion = null;
 
+        /* Couches pour lesquelles le réglage Terre/Mer n'a AUCUN sens physique :
+           ce sont des champs atmosphériques ou de sol qui existent sur les
+           océans, et les masquer reviendrait à inventer une absence de donnée
+           (règle d'or n°4). Exemple : la nébulosité, la pression ou le vent
+           sont parfaitement définis au-dessus de la mer — les masquer
+           priverait l'utilisateur d'information réelle.
+           Toutes les autres couches (températures, vent, pluie, rafales,
+           CAPE, humidité, réflectivité, etc.) suivent le réglage. */
+        var SEA_MASK_ALWAYS_ON = {
+            nebulosite: true,
+            humidite: true,
+            pression: true,
+            pression_surface: true
+        };
+
+        /* Le masquage marin s'applique à TOUTES les couches sauf celles
+           explicitement exclues ci-dessus. */
+        function isSeaMaskableLayer(key) {
+            if (!key) return false;
+            if (SEA_MASK_ALWAYS_ON[key]) return false;
+            return true;
+        }
+
         function isTemperatureLayer(key) {
             if (!key) return false;
             return key === 'temperature' ||
@@ -405,7 +428,7 @@
 
         function isLand(u, v) {
 
-            if (seaMode === 'none' || !isTemperatureLayer(currentLayer)) return true; // N'applique le masquage marin qu'aux températures
+            if (seaMode === 'none' || !isSeaMaskableLayer(currentLayer)) return true; // masquage applique a toutes les couches masquables
 
             if (!maskSamplerReady || !maskSamplerContext) return true;
 
@@ -1787,7 +1810,7 @@
             context.rect(0, 0, outW, outH);
             context.clip();
 
-            var shouldMaskSea = (seaMode === 'land' && isTemperatureLayer(currentLayer));
+            var shouldMaskSea = (seaMode === 'land' && isSeaMaskableLayer(currentLayer));
             if (shouldMaskSea) {
                 context.save();
                 context.transform(hScale, 0, 0, vScale, offX, offY);
@@ -1841,7 +1864,7 @@
                 // Prolongement parfait de la couleur océanique tout en bas jusqu'au bord
                 weatherCtx.drawImage(activeImg, 0, activeImg.naturalHeight - 2, activeImg.naturalWidth, 2, 0, activeImg.naturalHeight, activeImg.naturalWidth, -offY + 30);
             }
-            if (seaMode === 'land' && isTemperatureLayer(currentLayer)) {
+            if (seaMode === 'land' && isSeaMaskableLayer(currentLayer)) {
                 var aMask = getAlphaMaskCanvas();
                 if (aMask) {
                     weatherCtx.globalCompositeOperation = 'destination-in';
@@ -5097,7 +5120,7 @@
                 gl.uniform1i(webgl.fondSampler, 2);
                 gl.uniform1f(webgl.useFond, webgl.fondReady ? 1 : 0);
 
-                var shouldMaskSea = (seaMode === 'land' && isTemperatureLayer(currentLayer) && webgl.maskReady);
+                var shouldMaskSea = (seaMode === 'land' && isSeaMaskableLayer(currentLayer) && webgl.maskReady);
                 gl.uniform1f(webgl.maskSea, shouldMaskSea ? 1 : 0);
 
                 gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
@@ -5150,7 +5173,7 @@
 
             fallbackContext.imageSmoothingQuality = 'high';
 
-            var shouldMaskSea = (seaMode === 'land' && isTemperatureLayer(currentLayer));
+            var shouldMaskSea = (seaMode === 'land' && isSeaMaskableLayer(currentLayer));
             if (shouldMaskSea) {
                 fallbackContext.fillStyle = '#1c4280';
                 fallbackContext.fillRect(mrx, mry, mrw, mrh);
