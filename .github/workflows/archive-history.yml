@@ -1,9 +1,6 @@
 name: Archivage Historique des Observations
 
 on:
-  schedule:
-    # A 02h30 du matin tous les jours
-    - cron: '30 2 * * *'
   workflow_dispatch:
 
 jobs:

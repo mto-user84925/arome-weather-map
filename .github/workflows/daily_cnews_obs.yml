@@ -1,9 +1,6 @@
 name: Actualisation Prévisions - Site Web Météo-France
 
 on:
-  schedule:
-    # Toutes les 2 heures (à la minute 45)
-    - cron: '45 */2 * * *'
   workflow_dispatch: # Permet de lancer la génération manuellement depuis GitHub
 
 permissions:

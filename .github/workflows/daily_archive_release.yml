@@ -9,9 +9,6 @@ on:
       - completed
 
   # 2. Cron de secours : 00Z (05h00 UTC) et 12Z (17h00 UTC)
-  schedule:
-    - cron: '0 5 * * *'
-    - cron: '0 17 * * *'
 
   # 3. Déclenchement manuel pour tests
   workflow_dispatch:

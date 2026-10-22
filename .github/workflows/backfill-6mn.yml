@@ -1,9 +1,6 @@
 name: Backfill Quotidien des Données 6mn
 
 on:
-  schedule:
-    # A 02h00 du matin tous les jours (UTC)
-    - cron: '0 2 * * *'
   workflow_dispatch: # Permet de le lancer manuellement depuis l'interface GitHub
 
 jobs:

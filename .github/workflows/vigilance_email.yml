@@ -1,9 +1,6 @@
 name: Envoi Cartes de Vigilance - Email Automatique
 
 on:
-  schedule:
-    # Deux fois par jour à 5h30 et 15h00 UTC (soit 7h30 et 17h00 en France)
-    - cron: '30 5,15 * * *'
   workflow_dispatch: # Permet de forcer manuellement le lancement depuis GitHub
 
 permissions:

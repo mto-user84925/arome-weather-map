@@ -1,9 +1,17 @@
 name: "Mise a Jour Automatique Multi-Modeles Meteo (24/7)"
 
+# Déclenchement UNIQUEMENT via l'API (outil externe) :
+#   POST /repos/{owner}/{repo}/actions/workflows/update_models.yml/dispatches
+#        {"ref":"main","inputs":{"max_hours":"51"}}
+# Aucun cron GitHub : les runs sont pilotés par l'orchestrateur externe.
 on:
-  schedule:
-    - cron: '15 1,4,7,10,13,16,19,22 * * *'
   workflow_dispatch:
+    inputs:
+      max_hours:
+        description: "Échéance maximale AROME (heures, 24 à 51)"
+        required: false
+        default: "51"
+        type: string
 
 permissions:
   contents: read
@@ -25,7 +33,8 @@ jobs:
     steps:
       - name: Recuperation du depot
         uses: actions/checkout@v4
-
+        with:
+          ref: main
       - name: Configuration de Python 3.11
         uses: actions/setup-python@v5
         with:
@@ -51,6 +60,10 @@ jobs:
           # AROME via open data (GRIB2 data.gouv.fr, gratuit).
           # -u = sortie non bufferisée (progression visible en temps réel dans les logs)
           python -u pipeline/arome_open_data.py
+        env:
+          # Consommé par le pipeline via l'input ; garde une valeur par
+          # défaut si l'orchestrateur n'en fournit pas.
+          MAX_HOURS: ${{ inputs.max_hours || '51' }}
 
       # ── Déploiement GitHub Pages direct (sans commit git des ~750 Mo de cartes) ──
       - name: Preparation du site

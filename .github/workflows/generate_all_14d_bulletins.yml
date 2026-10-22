@@ -1,9 +1,6 @@
 name: Génération 32 Bulletins 14J CNews
 
 on:
-  schedule:
-    # 17h00 heure de Paris en été (15h00 UTC)
-    - cron: '0 15 * * *'
   workflow_dispatch:
     inputs:
       test_mode:

@@ -1,37 +1,94 @@
-name: Actualisation Automatique AROME HD (Météo-France)
+name: "Actualisation AROME HD (Météo-France) — données réelles uniquement"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ⚠️ Ce workflow ne fait plus rien de lui-même (schedule retiré).
+#
+# Historique : il appelait `generate_arome_maps.py`, qui générait des champs
+# SYNTHÉTIQUES (sinusoïdes + bruit) et publiait ces images sous le nom de
+# « Cartes AROME HD officielles Météo-France », sur une branche `data`…
+# qui n'existait même pas. Chaque exécution échouait silencieusement, et si
+# elle avait réussi elle aurait écrasé le vrai site par des cartes fictives
+# (violation de la règle d'or n°4).
+#
+# Le pipeline de production est désormais unique et réel :
+#   .github/workflows/update_models.yml → pipeline/arome_open_data.py
+#   (GRIB2 open data Météo-France 0,01°, eccodes, Mercator 2200×1640)
+#
+# Ce fichier reste exécutable à la demande (`workflow_dispatch`) pour lancer
+# un run AROME complet depuis l'interface GitHub, en délégant au vrai moteur.
+# ─────────────────────────────────────────────────────────────────────────────
 
 on:
-  schedule:
-    # Exécution 4 fois par jour après la sortie des runs Météo-France (00z, 06z, 12z, 18z)
-    - cron: '30 3,9,15,21 * * *'
   workflow_dispatch:
+    inputs:
+      max_hours:
+        description: "Échéance maximale (heures, 24 à 51)"
+        required: true
+        default: "51"
+        type: string
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "arome-cron-manual"
+  cancel-in-progress: false
 
 jobs:
   build-maps:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
 
     steps:
       - name: Récupération du dépôt
         uses: actions/checkout@v4
-
+        with:
+          ref: main
       - name: Configuration de Python 3.11
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Installation des dépendances météo
+      - name: Dépendances système et Python
         run: |
+          sudo apt-get update
+          sudo apt-get install -y libeccodes-dev libeccodes-tools
           python -m pip install --upgrade pip
-          pip install numpy pillow eccodes cfgrib xarray requests
+          pip install numpy pillow requests eccodes cfgrib xarray scipy shapely
 
-      - name: Génération des Cartes AROME HD
+      - name: Génération des cartes AROME HD (GRIB2 réels)
         run: |
-          python generate_arome_maps.py
+          # -u = sortie non bufferisée (progression visible en temps réel)
+          python -u generate_arome_maps.py \
+            --max-hours "${MAX_HOURS}" \
+            --fail-if-empty
+        env:
+          MAX_HOURS: ${{ github.event.inputs.max_hours || '51' }}
 
-      - name: Publication des cartes sur GitHub Pages / Branche data
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Préparation du site
+        run: |
+          mkdir -p _site
+          mkdir -p output/arome/maps
+          cp -r assets/maps/* output/arome/maps/ 2>/dev/null || true
+          cp *.html _site/ 2>/dev/null || true
+          cp logo*.png _site/ 2>/dev/null || true
+          touch _site/.nojekyll
+          cp -r js _site/ 2>/dev/null || true
+          cp -r css _site/ 2>/dev/null || true
+          cp -r vigilance-assets _site/ 2>/dev/null || true
+          cp -r output _site/ 2>/dev/null || true
+
+      - name: Configuration Pages
+        uses: actions/configure-pages@v5
+
+      - name: Téléversement de l'artefact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./output
-          publish_branch: data
+          path: '_site'
+
+      - name: Déploiement sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

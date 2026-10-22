@@ -23,8 +23,9 @@ on:
         default: '51'
 
 permissions:
-  contents: write
-  actions: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: "grele-module"
@@ -41,7 +42,8 @@ jobs:
     steps:
       - name: Récupération du dépôt
         uses: actions/checkout@v4
-
+        with:
+          ref: main
       - name: Configuration de Python 3.11
         uses: actions/setup-python@v5
         with:
@@ -60,23 +62,36 @@ jobs:
             --convective-only \
             --max-hours "${{ inputs.max_hours || '51' }}"
 
-      - name: Commit et push des cartes du module Grêle
+      # ── Pas de commit des cartes dans Git (règle d'or n°1) ───────────────
+      # L'ancienne étape faisait `git add -A output/arome/maps/` alors que
+      # .gitignore exclut `output/` : la commande échouait en exit 1, et
+      # `contents: write` permettait d'alourdir l'historique. Publication
+      # uniquement via l'artefact Pages ci-dessous.
+      - name: Préparation du site
         run: |
-          git config --global user.name "Meteo Automations Bot"
-          git config --global user.email "bot@meteo-climat.pro"
-          git add -A output/arome/maps/
-          if git diff --staged --quiet; then
-            echo "Aucune nouvelle carte du module à pousser."
-          else
-            git commit -m "Module Grêle : couches convectives AROME 0,025° [$(date -u +'%Y-%m-%d %H:%MZ')]"
-            git push origin main
-          fi
+          mkdir -p _site
+          # Les assets partagés (fond, frontières, communes, masque) viennent
+          # de assets/maps : sans eux, le rendu convectif serait sans fond.
+          if [ -d assets/maps ]; then cp -r assets/maps/* output/arome/maps/ 2>/dev/null || true; fi
+          cp *.html _site/ 2>/dev/null || true
+          cp logo*.png _site/ 2>/dev/null || true
+          touch _site/.nojekyll
+          cp -r js _site/ 2>/dev/null || true
+          cp -r css _site/ 2>/dev/null || true
+          cp -r vigilance-assets _site/ 2>/dev/null || true
+          # Fusionne : output/ contient les couches du module ET l'index.json
+          # précédent (restauré via GH_TOKEN dans deploy-pages.yml).
+          cp -r output _site/ 2>/dev/null || true
 
-      - name: Déclencher le déploiement GitHub Pages
-        # NB : un push fait par GITHUB_TOKEN ne déclenche PAS les workflows
-        # `on: push` (limitation GitHub) → on lance explicitement le déploiement.
-        run: |
-          gh workflow run deploy-pages.yml --repo mto-user84925/arome-weather-map --ref main
-        env:
-          GH_TOKEN: ${{ github.token }}
+      - name: Configuration Pages
+        uses: actions/configure-pages@v5
+
+      - name: Téléversement de l'artefact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Déploiement sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
