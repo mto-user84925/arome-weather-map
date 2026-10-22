@@ -65,6 +65,47 @@ jobs:
           # défaut si l'orchestrateur n'en fournit pas.
           MAX_HOURS: ${{ inputs.max_hours || '51' }}
 
+      # ── Restauration des autres modules AVANT de reconstruire _site ────
+      # update_models ne genere que output/arome/. Sans cette etape, son
+      # output/ ne contient qu'un dossier, et `cp -r output _site/` ECRASE
+      # les cartes des autres modules (arome_antilles, arome_reunion)
+      # publiees par arome_om.yml. Constate en production : les Outre-Mer
+      # repassaient en 404 quelques minutes apres chaque run AROME.
+      # On repart du dernier artefact Pages reussi (qui contient TOUS les
+      # modules), puis le pipeline AROME ecrase proprement output/arome/.
+      - name: Restaurer les donnees des autres modules
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          mkdir -p /tmp/base /tmp/base/restored
+          RESTORED=""
+          for RUN_ID in $(gh run list --repo ${{ github.repository }} \
+                --status success --limit 10 --json databaseId,workflowName --jq \
+                '.[] | select(.workflowName | test("Multi-Modeles|Pages|AROME")) | .databaseId' 2>/dev/null || true); do
+            echo "Tentative de restauration depuis le run $RUN_ID..."
+            if gh run download "$RUN_ID" --repo ${{ github.repository }} \
+                 -n github-pages -D /tmp/base >/dev/null 2>&1; then
+              RESTORED="$RUN_ID"
+              break
+            fi
+          done
+          if [ -n "$RESTORED" ]; then
+            tar -xf /tmp/base/artifact.tar -C /tmp/base/restored
+            # Copie module par module, SANS toucher a output/arome
+            # (regenere par le pipeline juste avant).
+            for d in /tmp/base/restored/output/*/; do
+              name=$(basename "$d")
+              [ "$name" = "arome" ] && continue
+              mkdir -p "output/$name"
+              cp -r "$d"* "output/$name/" 2>/dev/null || true
+            done
+            echo "Base restauree depuis le run $RESTORED"
+            echo "Modules presents : $(ls output 2>/dev/null | tr '\n' ' ')"
+          else
+            echo "Attention : aucun artefact precedent trouve"
+          fi
+
       # ── Déploiement GitHub Pages direct (sans commit git des ~750 Mo de cartes) ──
       - name: Preparation du site
         run: |
