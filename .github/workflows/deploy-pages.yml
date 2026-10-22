@@ -21,6 +21,22 @@ jobs:
     steps:
       - name: Recuperation du depot
         uses: actions/checkout@v4
+        with:
+          # CRITIQUE : sans `ref`, ce workflow checkout la branche par defaut
+          # de l'EVENEMENT DECLENCHEUR. Pour `workflow_run` (Archivage), ce
+          # n'est pas `main` mais la branche du run declencheur, qui peut
+          # pointer sur un commit ancien. Le workflow publiait alors un
+          # index.html ARCHAÏQUE par-dessus l'artefact Pages frais.
+          # Symptome constate : le site servait arome-map.js?v=20260907-02
+          # (6 semaines de retard) alors que les deploiements "reussissaient".
+          # On epingle donc explicitement main : le site reflete toujours le
+          # code du depot, quel que soit le declencheur.
+          ref: main
+
+      - name: Verifier la revision publiee
+        run: |
+          echo "Commit publie : $(git rev-parse --short HEAD) — $(git log -1 --format=%s)"
+          grep -o 'js/arome-map\.js?v=[^"]*' index.html || true
 
       - name: Restaurer les donnees output du dernier deploiement
         env:
