@@ -4,6 +4,16 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    # Un commit qui ne touche QUE des workflows ou de la doc n'a aucune
+    # raison de redeployer tout le site. Sans ce filtre, chaque petite
+    # correction CI declenchait un deploiement Pages complet, et les
+    # commits en rafale s'annulaient mutuellement (cancel-in-progress).
+    paths-ignore:
+      - '.github/**'
+      - '**.md'
+      - 'docs/**'
+      - 'scratch/**'
+      - 'tests/**'
 
 permissions:
   contents: read
