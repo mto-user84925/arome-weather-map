@@ -65,6 +65,46 @@ jobs:
       # `contents: write` permettait en plus d'écrire dans l'historique.
       # Les dalles sont désormais publiées uniquement via l'artefact Pages.
 
+      # ── Restauration des autres modules AVANT de reconstruire _site ────
+      # Ce workflow ne genere que output/arome_antilles et output/arome_reunion.
+      # Sans cette etape, `cp -r output _site/` publie un artefact SANS
+      # output/arome/ : les cartes AROME HD disparaissent du site (404 sur
+      # index.json et sur toutes les dalles), jusqu'au prochain run AROME.
+      # On repart du dernier artefact Pages reussi (tous modules confondus)
+      # et on n'ecrase que les dossiers regeneres ici.
+      - name: Restaurer les donnees des autres modules
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          mkdir -p /tmp/base /tmp/base/restored
+          RESTORED=""
+          for RUN_ID in $(gh run list --repo ${{ github.repository }} \
+                --status success --limit 10 --json databaseId,workflowName --jq \
+                '.[] | select(.workflowName | test("Multi-Modeles|Pages|AROME")) | .databaseId' 2>/dev/null || true); do
+            echo "Tentative de restauration depuis le run $RUN_ID..."
+            if gh run download "$RUN_ID" --repo ${{ github.repository }} \
+                 -n github-pages -D /tmp/base >/dev/null 2>&1; then
+              RESTORED="$RUN_ID"
+              break
+            fi
+          done
+          if [ -n "$RESTORED" ]; then
+            tar -xf /tmp/base/artifact.tar -C /tmp/base/restored
+            for d in /tmp/base/restored/output/*/; do
+              name=$(basename "$d")
+              case "$name" in
+                arome_antilles|arome_reunion) continue ;;  # regeneres ci-dessus
+              esac
+              mkdir -p "output/$name"
+              cp -r "$d"* "output/$name/" 2>/dev/null || true
+            done
+            echo "Base restauree depuis le run $RESTORED"
+            echo "Modules presents : $(ls output 2>/dev/null | tr '\n' ' ')"
+          else
+            echo "Attention : aucun artefact precedent trouve"
+          fi
+
       - name: Préparation du site
         run: |
           mkdir -p _site
