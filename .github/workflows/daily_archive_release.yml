@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Recuperation du depot
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Configuration de Python 3.11
         uses: actions/setup-python@v5
