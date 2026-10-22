@@ -56,7 +56,18 @@ NI, NJ = 2801, 1791
 LAT0, LON0, STEP = 55.4, -12.0, 0.01
 
 def latest_run():
-    """Trouve le run AROME le plus récent disponible et vérifie sa disponibilité S3."""
+    """Trouve le run AROME le plus récent COMPLET et vérifie sa disponibilité S3.
+
+    Piège corrigé : Météo-France publie des run horaires (01Z, 03Z…) mais la
+    résolution au pas de 3 h (« cand_h = (cand_dt.hour // 3) * 3 ») pouvait
+    retomber sur 01Z/03Z, qui n'existent que partiellement sur le bucket.
+    Le workflow du matin sélectionnait ainsi le run 03Z de la veille alors
+    que 06Z était complet depuis des heures → cartes périmées malgré des
+    crons sains.
+    Désormais : candidats = runs réellement annoncés par l'API data.gouv,
+    testés du plus récent au plus ancien, avec repli sur les créneaux
+    horaires complets (00,06,12,18) si l'API ne répond pas.
+    """
     runs = set()
     try:
         r = requests.get(DATASET_API, headers=HEADERS, timeout=30)
@@ -70,11 +81,12 @@ def latest_run():
         pass
 
     if not runs:
+        # Repli : créneaux horaires réellement publiés en synoptique.
         now = datetime.datetime.now(datetime.timezone.utc)
-        for delta_h in range(0, 24, 3):
-            cand_dt = (now - datetime.timedelta(hours=delta_h))
-            cand_h = (cand_dt.hour // 3) * 3
-            cand = cand_dt.replace(hour=cand_h, minute=0, second=0, microsecond=0)
+        for delta_h in range(0, 30, 6):
+            cand = now - datetime.timedelta(hours=delta_h)
+            cand = cand.replace(hour=(cand.hour // 6) * 6, minute=0,
+                                second=0, microsecond=0)
             runs.add(cand.strftime("%Y-%m-%dT%H:00:00Z"))
 
     sorted_runs = sorted(runs, reverse=True)
@@ -84,9 +96,13 @@ def latest_run():
         try:
             resp = requests.head(test_url, headers=HEADERS, timeout=10)
             if resp.status_code == 200:
+                print("[AROME] Run retenu : %s (échéance 51H confirmée sur S3)"
+                      % run_cand)
                 return run_cand
         except Exception:
             pass
+    print("[AROME] WARNING : aucun run complet détecté, repli sur %s"
+          % sorted_runs[0])
     return sorted_runs[0]
 
 
@@ -937,5 +953,23 @@ def run(max_hours=51):
           % (len(steps), len(communes)))
 
 
+def _max_hours_from_env(default=51):
+    """Échéance maximale surchargeable par l'orchestrateur (input GitHub).
+
+    Le workflow `update_models.yml` exporte MAX_HOURS depuis
+    `workflow_dispatch.inputs.max_hours` ; sans cette lecture, l'input
+    serait ignoré et tous les runs iraient systématiquement à H+51.
+    """
+    raw = os.environ.get("MAX_HOURS", "").strip()
+    if not raw:
+        return default
+    try:
+        val = int(raw)
+    except ValueError:
+        print("WARNING: MAX_HOURS='%s' invalide, repli sur %d" % (raw, default))
+        return default
+    return max(1, min(val, 51))
+
+
 if __name__ == "__main__":
-    run()
+    run(max_hours=_max_hours_from_env())
