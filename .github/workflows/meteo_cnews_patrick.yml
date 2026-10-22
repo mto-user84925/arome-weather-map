@@ -39,6 +39,8 @@ jobs:
     steps:
       - name: Récupérer le code du dépôt
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Installer FFmpeg et Polices Emoji (requis pour la compilation vidéo)
         run: |
@@ -88,6 +90,8 @@ jobs:
     steps:
       - name: Récupérer le code du dépôt
         uses: actions/checkout@v4
+        with:
+          ref: main
 
       - name: Installer FFmpeg (requis pour ffprobe)
         run: |
