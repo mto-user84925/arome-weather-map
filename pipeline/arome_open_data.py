@@ -56,19 +56,25 @@ NI, NJ = 2801, 1791
 LAT0, LON0, STEP = 55.4, -12.0, 0.01
 
 def latest_run():
-    """Trouve le run AROME le plus récent COMPLET et vérifie sa disponibilité S3.
+    """Trouve le run AROME le plus récent COMPLET (échéance 51H présente sur S3).
 
-    Piège corrigé : Météo-France publie des run horaires (01Z, 03Z…) mais la
-    résolution au pas de 3 h (« cand_h = (cand_dt.hour // 3) * 3 ») pouvait
-    retomber sur 01Z/03Z, qui n'existent que partiellement sur le bucket.
-    Le workflow du matin sélectionnait ainsi le run 03Z de la veille alors
-    que 06Z était complet depuis des heures → cartes périmées malgré des
-    crons sains.
-    Désormais : candidats = runs réellement annoncés par l'API data.gouv,
-    testés du plus récent au plus ancien, avec repli sur les créneaux
-    horaires complets (00,06,12,18) si l'API ne répond pas.
+    Deux pièges corrigés successivement :
+    1. Un pas de 3 h aveugle retombait sur des runs 01Z/03Z inexistants.
+    2. Se fier UNIQUEMENT à l'API data.gouv servait un run périmé : cette API
+       accuse un retard de plusieurs heures sur la publication S3. Constaté
+       le 23/10 — à 10h25 la fonction retenait 03Z alors que 06Z et 09Z
+       étaient déjà complets sur le bucket.
+
+    Désormais les candidats viennent de DEUX sources combinées :
+      - les runs annoncés par l'API (source officielle) ;
+      - les créneaux horaires plausibles calculés depuis l'horloge UTC
+        (toutes les heures des 12 dernières heures).
+    On teste du plus récent au plus ancien la présence de l'échéance finale
+    sur S3 ; le premier qui répond est le vrai run le plus récent.
     """
     runs = set()
+
+    # 1. Runs annoncés par l'API data.gouv (peut être en retard)
     try:
         r = requests.get(DATASET_API, headers=HEADERS, timeout=30)
         if r.status_code == 200:
@@ -80,18 +86,18 @@ def latest_run():
     except Exception:
         pass
 
-    if not runs:
-        # Repli : créneaux horaires réellement publiés en synoptique.
-        now = datetime.datetime.now(datetime.timezone.utc)
-        for delta_h in range(0, 30, 6):
-            cand = now - datetime.timedelta(hours=delta_h)
-            cand = cand.replace(hour=(cand.hour // 6) * 6, minute=0,
-                                second=0, microsecond=0)
-            runs.add(cand.strftime("%Y-%m-%dT%H:00:00Z"))
+    # 2. Créneaux horaires plausibles : AROME publie des runs horaires, mais
+    #    seuls 00/03/06/09/12/15/18/21 sont complets sur 51 h en pratique.
+    #    On élargit à toutes les heures des 12 dernières heures : le test S3
+    #    filtrera ceux qui n'existent pas.
+    now = datetime.datetime.now(datetime.timezone.utc)
+    for delta_h in range(0, 13):
+        cand = (now - datetime.timedelta(hours=delta_h)).replace(
+            minute=0, second=0, microsecond=0)
+        runs.add(cand.strftime("%Y-%m-%dT%H:00:00Z"))
 
     sorted_runs = sorted(runs, reverse=True)
     for run_cand in sorted_runs:
-        # Vérifie que le run est COMPLET (échéance finale 51H présente sur S3)
         test_url = GRIB_BASE.format(run=run_cand, pkg="SP1", lead=51)
         try:
             resp = requests.head(test_url, headers=HEADERS, timeout=10)
@@ -101,7 +107,8 @@ def latest_run():
                 return run_cand
         except Exception:
             pass
-    print("[AROME] WARNING : aucun run complet détecté, repli sur %s"
+
+    print("[AROME] WARNING : aucun run complet détecté sur 13 h, repli sur %s"
           % sorted_runs[0])
     return sorted_runs[0]
 
