@@ -114,6 +114,7 @@ jobs:
 
       - name: Préparation du site
         run: |
+          git fetch origin main && git checkout origin/main -- index.html previsions.html grele.html alerte-grele.html vigilance.html js/ css/ 2>/dev/null || true
           mkdir -p _site
           mkdir -p output/arome/maps
           # Assets géographiques statiques (fond, frontières, communes, masque)

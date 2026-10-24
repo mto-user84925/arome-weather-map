@@ -111,6 +111,7 @@ jobs:
       # ── Déploiement GitHub Pages direct (sans commit git des ~750 Mo de cartes) ──
       - name: Preparation du site
         run: |
+          git fetch origin main && git checkout origin/main -- index.html previsions.html grele.html alerte-grele.html vigilance.html js/ css/ 2>/dev/null || true
           mkdir -p _site
           mkdir -p output/arome/maps
           cp -r assets/maps/* output/arome/maps/ 2>/dev/null || true

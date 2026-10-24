@@ -93,6 +93,7 @@ jobs:
       # uniquement via l'artefact Pages ci-dessous.
       - name: Préparation du site
         run: |
+          git fetch origin main && git checkout origin/main -- index.html previsions.html grele.html alerte-grele.html vigilance.html js/ css/ 2>/dev/null || true
           mkdir -p _site
           # Les assets partagés (fond, frontières, communes, masque) viennent
           # de assets/maps : sans eux, le rendu convectif serait sans fond.
