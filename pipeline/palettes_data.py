@@ -611,3 +611,5 @@ PALETTES["rafales_convectives"] = [
     (120.0, (239, 68,  68,  255)),
     (150.0, (168, 85,  247, 255)),
 ]
+
+PALETTES["nuages"] = PALETTES["nebulosite"]

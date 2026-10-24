@@ -55,7 +55,7 @@ CONFIGS = {
 
 LAYERS = [
     "temperature", "vent", "rafales", "pluie_1h", "pluie_cumul",
-    "humidite", "point_rosee", "pression", "nuages", "mucape"
+    "humidite", "point_rosee", "pression", "nebulosite", "nuages", "mucape"
 ]
 
 
@@ -226,7 +226,8 @@ def process_lead(raw, prev_tp, lead):
     if tcc is not None:
         if tcc.max() <= 1.05:
             tcc = tcc * 100.0
-        out["nuages"] = np.clip(tcc, 0.0, 100.0)
+        out["nebulosite"] = np.clip(tcc, 0.0, 100.0)
+        out["nuages"] = out["nebulosite"]
 
     # CAPE / MUCAPE (J/kg)
     if "cape" in raw:
