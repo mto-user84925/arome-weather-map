@@ -2,8 +2,6 @@
 name: Radar MF Auto-Refresh
 
 on:
-  push:
-    branches: [ master ]
   workflow_dispatch:  # Permet le déclenchement manuel
 
 jobs:

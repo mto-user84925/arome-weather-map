@@ -347,9 +347,15 @@
            CAPE, humidité, réflectivité, etc.) suivent le réglage. */
         var SEA_MASK_ALWAYS_ON = {
             nebulosite: true,
+            nuages_bas: true,
+            nuages_moyens: true,
+            nuages_eleves: true,
+            nuages: true,
             humidite: true,
             pression: true,
-            pression_surface: true
+            pression_surface: true,
+            geopotentiel_500: true,
+            geopotentiel_500_meteociel: true
         };
 
         /* Le masquage marin s'applique à TOUTES les couches sauf celles
@@ -6530,7 +6536,7 @@
 
             reset.addEventListener('click', resetView);
 
-        } else if (resetButton) {
+        } else if (typeof resetButton !== 'undefined' && resetButton) {
 
             resetButton.addEventListener('click', resetView);
 

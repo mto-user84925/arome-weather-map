@@ -17,6 +17,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: "weather-pipeline"
@@ -100,6 +101,7 @@ jobs:
               mkdir -p "output/$name"
               cp -r "$d"* "output/$name/" 2>/dev/null || true
             done
+            rm -rf /tmp/base
             echo "Base restauree depuis le run $RESTORED"
             echo "Modules presents : $(ls output 2>/dev/null | tr '\n' ' ')"
           else
@@ -121,7 +123,7 @@ jobs:
           cp -r js _site/ 2>/dev/null || true
           cp -r css _site/ 2>/dev/null || true
           cp -r vigilance-assets _site/ 2>/dev/null || true
-          cp -r output _site/ 2>/dev/null || true
+          mv output _site/ 2>/dev/null || true
 
       - name: Configuration Pages
         uses: actions/configure-pages@v5

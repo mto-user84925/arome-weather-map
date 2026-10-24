@@ -21,6 +21,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: "arome-om-pipeline"
@@ -91,14 +92,20 @@ jobs:
           done
           if [ -n "$RESTORED" ]; then
             tar -xf /tmp/base/artifact.tar -C /tmp/base/restored
+            DOM_INPUT="${{ github.event.inputs.domain || 'all' }}"
             for d in /tmp/base/restored/output/*/; do
               name=$(basename "$d")
-              case "$name" in
-                arome_antilles|arome_reunion) continue ;;  # regeneres ci-dessus
-              esac
+              if [ "$DOM_INPUT" = "all" ] && { [ "$name" = "arome_antilles" ] || [ "$name" = "arome_reunion" ]; }; then
+                continue
+              elif [ "$DOM_INPUT" = "antilles" ] && [ "$name" = "arome_antilles" ]; then
+                continue
+              elif [ "$DOM_INPUT" = "reunion" ] && [ "$name" = "arome_reunion" ]; then
+                continue
+              fi
               mkdir -p "output/$name"
               cp -r "$d"* "output/$name/" 2>/dev/null || true
             done
+            rm -rf /tmp/base
             echo "Base restauree depuis le run $RESTORED"
             echo "Modules presents : $(ls output 2>/dev/null | tr '\n' ' ')"
           else
@@ -120,7 +127,7 @@ jobs:
           cp -r js _site/ 2>/dev/null || true
           cp -r css _site/ 2>/dev/null || true
           cp -r vigilance-assets _site/ 2>/dev/null || true
-          cp -r output _site/ 2>/dev/null || true
+          mv output _site/ 2>/dev/null || true
           echo "Contenu publié :"
           du -sh _site/output/arome_antilles _site/output/arome_reunion 2>/dev/null || true
 

@@ -26,6 +26,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: read
 
 concurrency:
   group: "grele-module"
@@ -56,6 +57,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install numpy pillow requests eccodes scipy
 
+      - name: Restaurer les donnees des autres modules avant ajout convectif
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          mkdir -p /tmp/base /tmp/base/restored
+          RESTORED=""
+          for RUN_ID in $(gh run list --repo ${{ github.repository }} \
+                --status success --limit 10 --json databaseId,workflowName --jq \
+                '.[] | select(.workflowName | test("Multi-Modeles|Pages|AROME")) | .databaseId' 2>/dev/null || true); do
+            if gh run download "$RUN_ID" --repo ${{ github.repository }} \
+                 -n github-pages -D /tmp/base >/dev/null 2>&1; then
+              RESTORED="$RUN_ID"
+              break
+            fi
+          done
+          if [ -n "$RESTORED" ]; then
+            tar -xf /tmp/base/artifact.tar -C /tmp/base/restored
+            cp -r /tmp/base/restored/output ./ 2>/dev/null || true
+            rm -rf /tmp/base
+            echo "Base restauree depuis le run $RESTORED"
+          fi
+
       - name: Pipeline Module Grêle (couches convectives 0,025°)
         run: |
           python -u pipeline/arome_open_data_remote.py \
@@ -81,7 +105,7 @@ jobs:
           cp -r vigilance-assets _site/ 2>/dev/null || true
           # Fusionne : output/ contient les couches du module ET l'index.json
           # précédent (restauré via GH_TOKEN dans deploy-pages.yml).
-          cp -r output _site/ 2>/dev/null || true
+          mv output _site/ 2>/dev/null || true
 
       - name: Configuration Pages
         uses: actions/configure-pages@v5

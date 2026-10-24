@@ -16,11 +16,15 @@ import os
 import re
 import sys
 import tempfile
+import threading
 import urllib.request
 
 import eccodes
 import numpy as np
 from PIL import Image
+
+# eccodes C library is not thread-safe; serialize all GRIB decoding calls.
+_ECCODES_LOCK = threading.Lock()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, "pipeline"))
@@ -55,22 +59,24 @@ LAYERS = [
 ]
 
 
-def find_latest_run(sub):
-    """Détecte le dernier run disponible sur le S3."""
+def find_latest_run(sub, max_hours=48):
+    """Détecte le dernier run COMPLET (lead=max_hours présent) disponible sur le S3."""
     now = datetime.datetime.now(datetime.timezone.utc)
-    for delta_h in range(0, 36, 6):
-        cand = (now - datetime.timedelta(hours=delta_h))
-        run_h = (cand.hour // 6) * 6
-        run_str = f"{cand.year:04d}-{cand.month:02d}-{cand.day:02d}T{run_h:02d}:00:00Z"
-        url = S3_BASE.format(run=run_str, sub=sub, pkg="SP1", lead=0)
-        try:
-            req = urllib.request.Request(url, method="HEAD")
-            req.add_header("User-Agent", "antigravity")
-            with urllib.request.urlopen(req, timeout=5) as r:
-                if r.status == 200:
-                    return run_str
-        except Exception:
-            continue
+    # 1. Chercher d'abord un run complet (SP1 + SP2 disponibles à l'échéance finale)
+    for probe_lead in (max_hours, 24, 0):
+        for delta_h in range(0, 36, 6):
+            cand = now - datetime.timedelta(hours=delta_h)
+            run_h = (cand.hour // 6) * 6
+            run_str = f"{cand.year:04d}-{cand.month:02d}-{cand.day:02d}T{run_h:02d}:00:00Z"
+            url = S3_BASE.format(run=run_str, sub=sub, pkg="SP1", lead=probe_lead)
+            try:
+                req = urllib.request.Request(url, method="HEAD")
+                req.add_header("User-Agent", "antigravity")
+                with urllib.request.urlopen(req, timeout=5) as r:
+                    if r.status == 200:
+                        return run_str
+            except Exception:
+                continue
     return None
 
 
@@ -86,89 +92,120 @@ def download_lead_packages(run_str, sub, lead, tmpdir):
             with urllib.request.urlopen(req, timeout=45) as resp, open(dest, "wb") as f:
                 f.write(resp.read())
             files[pkg] = dest
-        except Exception as e:
+        except Exception:
             pass
     return files
 
 
 def extract_fields(files):
-    """Lit les messages GRIB2 et extrait les grilles 2D."""
+    """Lit les messages GRIB2 et extrait les grilles 2D sans écrasement entre SP1 et SP2."""
     raw = {}
     src_lats = None
     src_lons = None
 
-    for pkg, path in files.items():
-        with open(path, "rb") as f:
-            while True:
-                gid = eccodes.codes_grib_new_from_file(f)
-                if gid is None:
-                    break
-                sname = eccodes.codes_get(gid, "shortName")
-                try:
-                    lev = eccodes.codes_get(gid, "level")
-                    lev_type = eccodes.codes_get(gid, "typeOfLevel")
-                except Exception:
-                    lev, lev_type = 0, "surface"
+    with _ECCODES_LOCK:
+        for pkg, path in files.items():
+            with open(path, "rb") as f:
+                while True:
+                    gid = eccodes.codes_grib_new_from_file(f)
+                    if gid is None:
+                        break
+                    try:
+                        sname = eccodes.codes_get(gid, "shortName")
+                    except Exception:
+                        sname = "unknown"
+                    try:
+                        lev = int(eccodes.codes_get(gid, "level"))
+                        lev_type = eccodes.codes_get(gid, "typeOfLevel")
+                    except Exception:
+                        lev, lev_type = 0, "surface"
+                    try:
+                        cat = int(eccodes.codes_get(gid, "parameterCategory"))
+                        num = int(eccodes.codes_get(gid, "parameterNumber"))
+                    except Exception:
+                        cat, num = -1, -1
 
-                if src_lats is None:
-                    ni = eccodes.codes_get(gid, "Ni")
-                    nj = eccodes.codes_get(gid, "Nj")
-                    lat0 = eccodes.codes_get(gid, "latitudeOfFirstGridPointInDegrees")
-                    lon0 = eccodes.codes_get(gid, "longitudeOfFirstGridPointInDegrees")
-                    lat1 = eccodes.codes_get(gid, "latitudeOfLastGridPointInDegrees")
-                    lon1 = eccodes.codes_get(gid, "longitudeOfLastGridPointInDegrees")
-                    if lon0 > 180.0: lon0 -= 360.0
-                    if lon1 > 180.0: lon1 -= 360.0
-                    src_lats = np.linspace(lat0, lat1, nj, dtype=np.float64)
-                    src_lons = np.linspace(lon0, lon1, ni, dtype=np.float64)
+                    if src_lats is None:
+                        ni = eccodes.codes_get(gid, "Ni")
+                        nj = eccodes.codes_get(gid, "Nj")
+                        lat0 = eccodes.codes_get(gid, "latitudeOfFirstGridPointInDegrees")
+                        lon0 = eccodes.codes_get(gid, "longitudeOfFirstGridPointInDegrees")
+                        lat1 = eccodes.codes_get(gid, "latitudeOfLastGridPointInDegrees")
+                        lon1 = eccodes.codes_get(gid, "longitudeOfLastGridPointInDegrees")
+                        if lon0 > 180.0:
+                            lon0 -= 360.0
+                        if lon1 > 180.0:
+                            lon1 -= 360.0
+                        src_lats = np.linspace(lat0, lat1, nj, dtype=np.float64)
+                        src_lons = np.linspace(lon0, lon1, ni, dtype=np.float64)
 
-                vals = eccodes.codes_get_values(gid)
-                arr = vals.reshape((len(src_lats), len(src_lons))).astype(np.float32)
+                    vals = eccodes.codes_get_values(gid)
+                    arr = vals.reshape((len(src_lats), len(src_lons))).astype(np.float32)
 
-                # Clé unique
-                key = f"{sname}_{lev_type}_{lev}"
-                raw[key] = arr
-                raw[sname] = arr
-                eccodes.codes_release(gid)
+                    # Clé qualifiée (ne s'écrase jamais entre niveaux 2m et surface 0m)
+                    key = f"{sname}_{lev_type}_{lev}"
+                    raw[key] = arr
+
+                    # Mapping explicite des paramètres GRIB2 Météo-France AROME-OM
+                    if sname in ("2t", "t") and lev == 2:
+                        raw["2t"] = arr
+                    elif sname in ("2d", "d") and lev == 2:
+                        raw["2d"] = arr
+                    elif sname in ("2r", "r") and lev == 2:
+                        raw["2r"] = arr
+                    elif sname in ("10u", "u") and lev == 10:
+                        raw["10u"] = arr
+                    elif sname in ("10v", "v") and lev == 10:
+                        raw["10v"] = arr
+                    elif sname in ("10fg", "fg10", "gust", "i10fg", "max_i10fg") or (cat == 2 and num == 22):
+                        raw["gust"] = arr
+                    elif sname == "max_10efg" or (cat == 2 and num == 23):
+                        raw["ugust"] = arr
+                    elif sname == "max_10nfg" or (cat == 2 and num == 24):
+                        raw["vgust"] = arr
+                    elif sname in ("tp", "tirf") or (cat == 1 and num in (8, 52)):
+                        raw["tp"] = arr
+                    elif sname in ("prmsl", "msl", "mslet"):
+                        raw["prmsl"] = arr
+                    elif sname in ("tcc", "nt") or (cat == 6 and num == 1):
+                        raw["tcc"] = arr
+                    elif sname in ("lcc", "mcc", "hcc"):
+                        raw[sname] = arr
+                    elif sname in ("cape", "CAPE_INS") or (cat == 7 and num == 6):
+                        raw["cape"] = arr
+
+                    eccodes.codes_release(gid)
 
     return raw, src_lats, src_lons
 
 
 def process_lead(raw, prev_tp, lead):
-    """Calcule les champs finaux prêts pour application de palette."""
+    """Calcule les champs finaux prêts pour application de palette (honnêteté physique stricte)."""
     out = {}
 
     # Température à 2 m (Kelvin -> Celsius)
     if "2t" in raw:
         out["temperature"] = raw["2t"] - 273.15
-    elif "t" in raw:
-        out["temperature"] = raw["t"] - 273.15
 
-    # Point de rosée (Kelvin -> Celsius)
+    # Point de rosée (Kelvin -> Celsius) — uniquement si présent dans le GRIB
     if "2d" in raw:
         out["point_rosee"] = raw["2d"] - 273.15
-    elif "d" in raw:
-        out["point_rosee"] = raw["d"] - 273.15
 
-    # Humidité relative
+    # Humidité relative à 2 m
     if "2r" in raw:
         out["humidite"] = np.clip(raw["2r"], 0.0, 100.0)
-    elif "r" in raw:
-        out["humidite"] = np.clip(raw["r"], 0.0, 100.0)
 
-    # Vent et rafales (m/s -> km/h)
-    u = raw.get("10u", raw.get("u"))
-    v = raw.get("10v", raw.get("v"))
+    # Vent moyen à 10 m et rafales réelles (m/s -> km/h, aucune estimation inventée)
+    u = raw.get("10u")
+    v = raw.get("10v")
     if u is not None and v is not None:
         out["vent"] = np.hypot(u, v) * 3.6
-    if "10fg" in raw:
-        out["rafales"] = raw["10fg"] * 3.6
-    elif "gust" in raw:
+    if "gust" in raw:
         out["rafales"] = raw["gust"] * 3.6
-    elif "vent" in out:
-        out["rafales"] = out["vent"] * 1.35
+    elif "ugust" in raw and "vgust" in raw:
+        out["rafales"] = np.hypot(raw["ugust"], raw["vgust"]) * 3.6
 
-    # Précipitations
+    # Précipitations (cumul(H+n) - cumul(H+n-1))
     tp = raw.get("tp")
     if tp is not None:
         out["pluie_cumul"] = np.clip(tp, 0.0, None)
@@ -178,19 +215,20 @@ def process_lead(raw, prev_tp, lead):
             out["pluie_1h"] = np.zeros_like(tp)
 
     # Pression niveau mer (Pa -> hPa)
-    for p_key in ("prmsl", "mslet", "pres"):
-        if p_key in raw:
-            out["pression"] = raw[p_key] / 100.0
-            break
+    if "prmsl" in raw:
+        out["pression"] = raw["prmsl"] / 100.0
 
-    # Nuages (%)
-    if "tcc" in raw:
-        tcc = raw["tcc"]
+    # Nuages totaux (%) — GRIB2 cat=6 num=1 (ou enveloppe max(lcc, mcc, hcc) réelle)
+    tcc = raw.get("tcc")
+    if tcc is None and any(k in raw for k in ("lcc", "mcc", "hcc")):
+        clouds = [raw[k] for k in ("lcc", "mcc", "hcc") if k in raw]
+        tcc = clouds[0] if len(clouds) == 1 else np.maximum.reduce(clouds)
+    if tcc is not None:
         if tcc.max() <= 1.05:
             tcc = tcc * 100.0
         out["nuages"] = np.clip(tcc, 0.0, 100.0)
 
-    # MUCAPE (J/kg)
+    # CAPE / MUCAPE (J/kg)
     if "cape" in raw:
         out["mucape"] = np.clip(raw["cape"], 0.0, None)
 
@@ -203,7 +241,7 @@ def render_domain(dom_key, max_hours=48, target_run=None):
     out_dir = cfg["out_dir"]
     os.makedirs(out_dir, exist_ok=True)
 
-    run_str = target_run or find_latest_run(cfg["sub"])
+    run_str = target_run or find_latest_run(cfg["sub"], max_hours=max_hours)
     if not run_str:
         print(f"[{dom_key}] Aucun run valide trouvé.")
         return False
@@ -232,16 +270,22 @@ def render_domain(dom_key, max_hours=48, target_run=None):
             fields, cur_tp = process_lead(raw, prev_tp, lead)
             prev_tp = cur_tp
 
-            # Regrid et rendu de chaque couche
+            # Regrid et rendu de chaque couche avec protection MemoryError par couche
+            rendered_files = {}
             for lay, arr in fields.items():
                 if lay not in PALETTES:
                     continue
-                regridded = dom.regrid(arr, src_lats, src_lons)
-                pal = PALETTES.get(lay, PALETTES.get("temperature"))
-                rgba = apply_palette(regridded, pal)
-                img = Image.fromarray(rgba)
-                tile_path = os.path.join(out_dir, lay, f"{lead:03d}.webp")
-                img.save(tile_path, "WEBP", quality=85)
+                try:
+                    regridded = dom.regrid(arr, src_lats, src_lons)
+                    pal = PALETTES.get(lay, PALETTES.get("temperature"))
+                    rgba = apply_palette(regridded, pal)
+                    img = Image.fromarray(rgba)
+                    tile_path = os.path.join(out_dir, lay, f"{lead:03d}.webp")
+                    img.save(tile_path, "WEBP", quality=85)
+                    rendered_files[lay] = f"maps/{lay}/{lead:03d}.webp"
+                except MemoryError:
+                    print(f"[{dom_key}] MemoryError sur la couche {lay} (H+{lead:02d}) — couche ignorée.")
+                    continue
 
             # Date échéance
             valid_dt = run_dt + datetime.timedelta(hours=lead)
@@ -250,16 +294,17 @@ def render_domain(dom_key, max_hours=48, target_run=None):
                 "step": lead,
                 "valid_time": valid_dt.isoformat(),
                 "date": valid_dt.strftime("%Y-%m-%d %H:%M UTC"),
-                "files": {lay: f"maps/{lay}/{lead:03d}.webp" for lay in fields if lay in PALETTES}
+                "files": rendered_files
             })
 
-            print(f"[{dom_key}] H+{lead:02d} rendu avec succès ({len(fields)} couches).", flush=True)
+            print(f"[{dom_key}] H+{lead:02d} rendu avec succès ({len(rendered_files)} couches).", flush=True)
 
             # Nettoyage fichiers temporaires
             for p in files.values():
-                if os.path.exists(p): os.remove(p)
+                if os.path.exists(p):
+                    os.remove(p)
 
-    # Manifeste index.json
+    active_layers = [lay for lay in LAYERS if any(lay in s["files"] for s in rendered_steps)]
     manifest = {
         "model": dom_key,
         "model_name": cfg["model_name"],
@@ -274,7 +319,7 @@ def render_domain(dom_key, max_hours=48, target_run=None):
         "fond": "maps/fond.webp",
         "mask": "maps/mask_france.png",
         "places": "maps/communes.json",
-        "layers": {lay: {"label": lay.capitalize()} for lay in LAYERS},
+        "layers": {lay: {"label": lay.capitalize()} for lay in active_layers},
         "steps": rendered_steps
     }
     with open(os.path.join(out_dir, "index.json"), "w", encoding="utf-8") as f:
@@ -298,4 +343,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

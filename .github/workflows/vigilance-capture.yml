@@ -1,8 +1,6 @@
 name: Vigilance - Collect & Capture
 
 on:
-  push:
-    branches: [ master ]
   workflow_dispatch: # Permet de le lancer manuellement
 
 jobs:

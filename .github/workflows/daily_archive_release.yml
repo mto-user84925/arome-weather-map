@@ -15,6 +15,7 @@ on:
 
 permissions:
   contents: write
+  actions: read
 
 jobs:
   archive-maps:
@@ -36,10 +37,30 @@ jobs:
       - name: Installation Pillow
         run: pip install pillow
 
+      - name: Restaurer output/arome depuis le dernier artefact Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          mkdir -p /tmp/base /tmp/base/restored
+          for RUN_ID in $(gh run list --repo ${{ github.repository }} \
+                --status success --limit 10 --json databaseId,workflowName --jq \
+                '.[] | select(.workflowName | test("Multi-Modeles|Pages|AROME")) | .databaseId' 2>/dev/null || true); do
+            if gh run download "$RUN_ID" --repo ${{ github.repository }} \
+                 -n github-pages -D /tmp/base >/dev/null 2>&1; then
+              tar -xf /tmp/base/artifact.tar -C /tmp/base/restored
+              mkdir -p output
+              cp -r /tmp/base/restored/output/arome output/ 2>/dev/null || true
+              rm -rf /tmp/base
+              echo "output/arome restaure depuis le run $RUN_ID"
+              break
+            fi
+          done
+
       - name: Verification du run courant (00Z ou 12Z uniquement)
         id: check_run
         run: |
-          RUN_HOUR=$(python3 -c "import json, sys; d=json.load(open('output/arome/maps/index.json')) if os.path.exists('output/arome/maps/index.json') else {}; print(int(d.get('run_time','')[11:13]) if len(d.get('run_time',''))>=13 else -1)" 2>/dev/null || echo -1)
+          RUN_HOUR=$(python3 -c "import json, os, sys; d=json.load(open('output/arome/maps/index.json')) if os.path.exists('output/arome/maps/index.json') else {}; print(int(d.get('run_time','')[11:13]) if len(d.get('run_time',''))>=13 else -1)" 2>/dev/null || echo -1)
           echo "Run hour: $RUN_HOUR"
           if [ "$RUN_HOUR" = "0" ] || [ "$RUN_HOUR" = "12" ]; then
             echo "is_major_run=true" >> $GITHUB_OUTPUT
