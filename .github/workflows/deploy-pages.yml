@@ -68,6 +68,9 @@ jobs:
           if [ -n "$RESTORED" ]; then
             tar -xf /tmp/base/artifact.tar -C /tmp/base/restored
             cp -r /tmp/base/restored/output ./ 2>/dev/null || true
+            # Purge des vieux modeles orphelins (ecmwf, gfs, icon) non AROME
+            rm -rf output/icon* output/ecmwf* output/gfs* output/arpege* output/*pacifique* output/*etats_unis*
+            echo "Nettoyage des modeles tiers orphelins dans AROME effectue"
             echo "Base restauree depuis le run $RESTORED"
           else
             echo "Attention : Aucun artefact trouve avec output/"
